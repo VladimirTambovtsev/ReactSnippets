@@ -2,6 +2,10 @@
   "name": "the_venue",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "11.0.0",
+    "npm": "6.4.1"
+  },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
     "@material-ui/core": "1.2.0",
