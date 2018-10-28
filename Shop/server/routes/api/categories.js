@@ -6,6 +6,25 @@ import validateCategoryInput from '../../validation/category'
 
 const router = express.Router()
 
+router.get('/', async (req, res) => {
+	try {
+		const categories = await Category.find({})
+		if (categories) {
+			res.status(200).json({
+				success: true,
+				data: categories
+			})
+		} else {
+			res.status(204).json({
+				success: true,
+				data: ['No Categories Yet']
+			})
+		}
+	} catch (err) {
+		res.status(500).send({ errors: err })
+	}
+})
+
 router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
 	// Check role
 	if (req.user.role !== 1) {

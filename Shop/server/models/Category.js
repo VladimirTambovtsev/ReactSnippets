@@ -7,7 +7,8 @@ const CategorySchema = new Schema({
 	categoryName: {
 		required: true,
 		type: String,
-		maxlength: 50
+		unique: 1,
+		maxlength: 80
 	},
 	date: {
 		type: Date,
@@ -16,5 +17,5 @@ const CategorySchema = new Schema({
 })
 
 
-const Product = mongoose.model('categories', CategorySchema)
-export default Product
+const Category = mongoose.model('categories', CategorySchema)
+export default Category

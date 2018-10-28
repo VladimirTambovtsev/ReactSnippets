@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node server/server.js",
-    "dev": "nodemon server/server.js --exec babel-node"
+    "server": "nodemon server/server.js --exec babel-node",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "dependencies": {
     "bcrypt": "2.0.1",
