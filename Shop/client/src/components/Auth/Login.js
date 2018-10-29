@@ -16,7 +16,7 @@ class Login extends Component {
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
-	onSubmit = e => {
+	onSubmit = async e => {
 		e.preventDefault()
 		const userData = {
 			email: this.state.email,
@@ -34,8 +34,11 @@ class Login extends Component {
 			this.setState({ emailClientError: 'Email is not valid' })
 		} else {
 			// @descr: Get Response From Server
-			const dispatch = this.props.dispatch(loginUser(userData))
-			console.log(dispatch)
+			const response = await this.props.dispatch(loginUser(userData))
+			if (response.payload.success) {
+				console.log(response.payload.token)
+				this.props.history.push('/')
+			}
 		}
 	}
 
