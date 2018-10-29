@@ -1,11 +1,9 @@
 {
-    "extends": ["plugin:react/recommended", "prettier/react"],
+    "extends": ["react-app", "prettier"],
     "rules": {
-    	"prettier/prettier": "error",
-    	"semi": [2, "never"]
+        "prettier/prettier": "error",
+        "semi": [2, "never"],
+        "jsx-a11y/href-no-hash": "off"
     },
-    "plugins": [
-    	"prettier",
-		"react"
-    ]
+    "plugins": ["prettier"]
 }

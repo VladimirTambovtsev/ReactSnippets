@@ -15,22 +15,22 @@ import ReduxThunk from 'redux-thunk'
 import Reducer from './redux/reducers'
 
 const createStoreWithMiddleware = applyMiddleware(
-	promiseMiddleware,
-	ReduxThunk
+    promiseMiddleware,
+    ReduxThunk
 )(createStore)
 
 ReactDOM.render(
-	<Provider
-		store={createStoreWithMiddleware(
-			Reducer,
-			// @descr: Chrome extension
-			window.__REDUX_DEVTOOLS_EXTENSION__ &&
-				window.__REDUX_DEVTOOLS_EXTENSION__()
-		)}
-	>
-		<BrowserRouter>
-			<Routes />
-		</BrowserRouter>
-	</Provider>,
-	document.getElementById('root')
+    <Provider
+        store={createStoreWithMiddleware(
+            Reducer,
+            // @descr: Chrome extension
+            window.__REDUX_DEVTOOLS_EXTENSION__ &&
+                window.__REDUX_DEVTOOLS_EXTENSION__()
+        )}
+    >
+        <BrowserRouter>
+            <Routes />
+        </BrowserRouter>
+    </Provider>,
+    document.getElementById('root')
 )

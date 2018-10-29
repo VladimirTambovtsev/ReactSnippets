@@ -7,15 +7,15 @@ import Register from './components/Auth/Register'
 import Login from './components/Auth/Login'
 
 const Routes = () => {
-	return (
-		<Layout>
-			<Switch>
-				<Route path="/" exact component={Home} />
-				<Route path="/signup" exact component={Register} />
-				<Route path="/signin" exact component={Login} />
-			</Switch>
-		</Layout>
-	)
+    return (
+        <Layout>
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/signup" exact component={Register} />
+                <Route path="/signin" exact component={Login} />
+            </Switch>
+        </Layout>
+    )
 }
 
 export default Routes
