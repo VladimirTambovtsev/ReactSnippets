@@ -86,19 +86,18 @@ router.post('/login', async (req, res) => {
 	// Compare passwords
 	const passwordsMatch = await bcrypt.compare(password, user.password)
 	if (passwordsMatch) {
-		const payload = { id: user.id, name: user.name, password: user.password }
+		const payload = { id: user.id, name: user.name }
 
 		jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: 3600 }, (err, token) => {
-				if (err) {
-					return res.json({
-						success: false,
-						errors: err
-					})
-				}
+				// if (err) {
+				// 	return res.json({
+				// 		success: false,
+				// 		errors: err
+				// 	})
+				// }
 				res.json({
 					success: true,
-					token: `Bearer ${token}`,
-					data: user
+					token: `Bearer ${token}`	// protocol
 				})
 			}
 		)
