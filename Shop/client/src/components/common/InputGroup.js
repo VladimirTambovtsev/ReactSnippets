@@ -3,44 +3,46 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 
-const TextFieldGroup = ({ 
+const InputGroup = ({ 
 	name,
 	placeholder,
 	value,
-	id,
-	error,
+	icon,
 	type,
+	error,
 	onChange,
-	disabled,
-	info
  }) => {
 	return (
-		<div>
-			<input 
+		<div className="input-group mb-3">
+			<div className="input-group-prepend">
+				<span className="input-group-text">
+					<i className={icon} />
+				</span>
+			</div>
+			<textarea 
 			className={classnames('form-control', { 'is-invalid': error })} 
-			type={type} placeholder={placeholder} name={name} value={value} disabled={disabled} id={id}
+			placeholder={placeholder} name={name} value={value}
 			onChange={onChange} />
 			{error && (<div className="invalid-feedback">{error}</div>)}
-			<small className="text-muted">{info}</small>
 		</div>
 	);
 };
 
-
-TextFieldGroup.propTypes = {
+InputGroup.propTypes = {
 	name: PropTypes.string.isRequired,
-	type: PropTypes.string.isRequired,
 	placeholder: PropTypes.string,
-	value: PropTypes.string,
-	id: PropTypes.string,
+	value: PropTypes.string.isRequired,
+	icon: PropTypes.string,
+	type: PropTypes.string,
 	error: PropTypes.string,
 	onChange: PropTypes.func.isRequired,
-	disabled: PropTypes.string,
-	info: PropTypes.string
 };
 
-TextFieldGroup.defaultProps = {
+InputGroup.defaultProps = {
 	type: 'text'
-};
+}
 
-export default TextFieldGroup;
+export default InputGroup;
+
+
+
