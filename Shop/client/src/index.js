@@ -1,10 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './Resources/css/styles.css'
-
-// Routing
-import { BrowserRouter } from 'react-router-dom'
-import Routes from './routes'
 
 // Redux
 import { Provider } from 'react-redux'
@@ -16,6 +13,9 @@ import rootReducer from './redux/reducers'
 import jwt_decode from 'jwt-decode'
 import setAuthToken from './redux/utils/setAuthToken'
 import { setCurrentUser } from './redux/actions/user_actions'
+
+// Components
+import Login from './components/Auth/Login'
 
 const initialState = {}
 const middleware = [thunk]
@@ -37,7 +37,6 @@ if (localStorage.jwtToken) {
 	const decoded = jwt_decode(localStorage.jwtToken)
 	// Set user and isAuthenticated
 	store.dispatch(setCurrentUser(decoded))
-	console.log('user authenticated')
 
 	// If token expired
 	const currentTime = Date.now() / 1000
@@ -49,15 +48,15 @@ if (localStorage.jwtToken) {
 		// store.dispatch(clearCurrentProfile())
 
 		// Redirect
-		window.location.href = '/login'
+		window.location.href = '/singup'
 	}
 }
 
 ReactDOM.render(
 	<Provider store={store}>
-		<BrowserRouter>
-			<Routes />
-		</BrowserRouter>
+		<Router>
+			<Route exact path="/signin" component={Login} />
+		</Router>
 	</Provider>,
 	document.getElementById('root')
 )
