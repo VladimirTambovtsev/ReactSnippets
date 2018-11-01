@@ -17,7 +17,6 @@ class Dashboard extends Component {
 	render() {
 		const { user } = this.props.auth
 		const { profile, loading } = this.props.profile
-		console.log('user:', user)
 
 		let dashboardContent
 		if (profile === null || loading) {
@@ -66,6 +65,12 @@ class Dashboard extends Component {
 					</div>
 					<div className="user_right_nav">
 						<UserInformation />
+						Name: {user.name}
+						Email: {user.email}
+						<br />
+						<br />
+						<br />
+						<br />
 						{dashboardContent}
 					</div>
 				</div>
