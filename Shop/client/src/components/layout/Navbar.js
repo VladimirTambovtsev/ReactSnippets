@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
@@ -17,20 +17,25 @@ class Navbar extends Component {
 		const authLinks = (
 			<div>
 				<div className="top">
-					<Link to="/"> Profile </Link>
+					<Link to="/users/cart"> My Cart </Link>
+					<Link to="/users/dashboard"> Profile </Link>
+					<span onClick={this.onLogoutClick.bind(this)}> Logout </span>
 				</div>
 				<div className="bottom">
-					<Link to="/"> Cart </Link>
+					<Link to="/"> Home </Link>
+					<Link to="/shop">Shop </Link>
 				</div>
 			</div>
 		)
 		const guestLinks = (
 			<ul className="navbar-nav ml-auto">
 				<div className="top">
-					<Link to="/signin"> Sign in </Link>
+					<Link to="/signup"> Sign up </Link>
 				</div>
 				<div className="bottom">
-					<Link to="/signup"> Sign up </Link>
+					<Link to="/"> Home </Link>
+					<Link to="/shop">Shop </Link>
+					<Link to="/signin"> Sign in </Link>
 				</div>
 			</ul>
 		)
@@ -59,7 +64,6 @@ Navbar.propTypes = {
 const mapStateToProps = state => ({
 	auth: state.auth,
 })
-
 
 export default connect(
 	mapStateToProps,

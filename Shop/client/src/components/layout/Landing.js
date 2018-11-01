@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
+import { connect } from 'react-redux'
 
 class Landing extends Component {
-	componentDidMount() {	// If user log in => go to '/dashboard'
-		if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard');
+	componentDidMount() {
+		// If user log in => go to '/dashboard'
+		if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')
 	}
 	render() {
-		return(
+		return (
 			<div>
 				<div className="landing-header">
 					<div className="dark-overlay landing-inner text-light">
@@ -16,10 +17,17 @@ class Landing extends Component {
 							<div className="row">
 								<div className="col-md-12 text-center">
 									<h1 className="display-4 mb-4">Developer Connector</h1>
-									<p className="lead">Create a developer portfolio, share posts and get help from other develoeprs.</p>
-									<hr/>
-									<Link to="/signup" className="btn btn-lg btn-primary mr-2">Sign up</Link>
-									<Link to="/login" className="btn btn-lg btn-light">Log in</Link>
+									<p className="lead">
+										Create a developer portfolio, share posts and get help from
+										other develoeprs.
+									</p>
+									<hr />
+									<Link to="/signup" className="btn btn-lg btn-primary mr-2">
+										Sign up
+									</Link>
+									<Link to="/signin" className="btn btn-lg btn-light">
+										Log in
+									</Link>
 								</div>
 							</div>
 						</div>
@@ -31,11 +39,14 @@ class Landing extends Component {
 }
 
 Landing.propTypes = {
-	auth: PropTypes.object.isRequired
+	auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-	auth: state.auth
-});
+	auth: state.auth,
+})
 
-export default connect(mapStateToProps, null)(Landing);
+export default connect(
+	mapStateToProps,
+	null
+)(Landing)

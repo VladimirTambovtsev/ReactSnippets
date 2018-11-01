@@ -84,7 +84,7 @@ class Login extends Component {
 									type="submit"
 									className="btn btn-block btn-primary mt-5"
 								>
-									Submit
+									Fine, Let me in
 								</button>
 							</form>
 						</div>

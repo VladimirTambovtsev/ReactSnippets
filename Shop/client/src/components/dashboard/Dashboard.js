@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCurrentProfile, deleteAccount } from '../../actions/profileActions'
-import ProfileActions from './ProfileActions'
-import Experience from './Experience'
-import Education from './Education'
+import UserInformation from './UserInformation'
 
 class Dashboard extends Component {
 	componentDidMount() {
@@ -19,6 +17,7 @@ class Dashboard extends Component {
 	render() {
 		const { user } = this.props.auth
 		const { profile, loading } = this.props.profile
+		console.log('user:', user)
 
 		let dashboardContent
 		if (profile === null || loading) {
@@ -60,12 +59,13 @@ class Dashboard extends Component {
 					<div className="user_left_nav">
 						<h2>My Account</h2>
 						<div className="links">
-							<Link to="/">link 1</Link>
-							<Link to="/">link 2</Link>
+							<Link to="/user/account">Account</Link>
+							<Link to="/user/info">User Information</Link>
+							<Link to="/user/cart">My Cart</Link>
 						</div>
 					</div>
 					<div className="user_right_nav">
-						<h1 className="display-4">Dashboard</h1>
+						<UserInformation />
 						{dashboardContent}
 					</div>
 				</div>
