@@ -1,34 +1,41 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import Slider from '../common/CommonSlider'
 import CallToAction from '../common/CallToAction'
+import CardBlock from '../common/CardBlock'
+// action creators
+import {
+	getProductsNew,
+	getProductsPopular,
+} from '../../actions/productsActions'
 
 class Landing extends Component {
 	componentDidMount() {
-		// If user log in => go to '/dashboard'
-		if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')
+		this.props.dispatch(getProductsPopular())
+		// this.props.dispatch(getProductsNew())
+		console.log('props:', this.props)
+		// if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')	// If user log in => go to '/dashboard'
 	}
 	render() {
 		return (
 			<div>
-				Landing
 				<Slider />
-				Abc
 				<CallToAction />
+				<h2>Popular Products</h2>
+				<CardBlock />
 			</div>
 		)
 	}
 }
 
-Landing.propTypes = {
-	auth: PropTypes.object.isRequired,
-}
+// const mapStateToProps = state => ({
+// 	product: state.product,
+// })
 
-const mapStateToProps = state => ({
-	auth: state.auth,
-})
+function mapStateToProps(state) {
+	console.log('state:', state.product.bySell)
+	return { bySell: state.product.bySell }
+}
 
 export default connect(
 	mapStateToProps,

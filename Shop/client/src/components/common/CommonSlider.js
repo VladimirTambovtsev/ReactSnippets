@@ -25,7 +25,7 @@ const sliderSettings = {
 	speed: 500,
 	slideToShow: 1,
 	slidesToScroll: 1,
-	arrow: false,
+	arrows: false,
 }
 
 const CommonSlider = props => {
