@@ -24,7 +24,12 @@ class Navbar extends Component {
 						</Link>
 					</div>
 					<Link to="/users/dashboard"> Profile </Link>
-					<span onClick={this.onLogoutClick.bind(this)}> Logout </span>
+					<span
+						style={{ cursor: 'pointer' }}
+						onClick={this.onLogoutClick.bind(this)}
+					>
+						Logout
+					</span>
 				</div>
 				<div className="bottom">
 					<Link to="/"> Home </Link>
