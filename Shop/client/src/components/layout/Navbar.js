@@ -17,7 +17,12 @@ class Navbar extends Component {
 		const authLinks = (
 			<div>
 				<div className="top">
-					<Link to="/users/cart"> My Cart </Link>
+					<div className="cart_link">
+						<Link to="/users/cart">
+							<span>{user.cart ? user.cart.length : 0}</span>
+							My Cart
+						</Link>
+					</div>
 					<Link to="/users/dashboard"> Profile </Link>
 					<span onClick={this.onLogoutClick.bind(this)}> Logout </span>
 				</div>

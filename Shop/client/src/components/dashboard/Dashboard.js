@@ -60,17 +60,16 @@ class Dashboard extends Component {
 						<div className="links">
 							<Link to="/user/account">Account</Link>
 							<Link to="/user/info">User Information</Link>
-							<Link to="/user/cart">My Cart</Link>
+							<Link to="/user/cart">
+								<div className="cart_link">
+									<span>{user.cart ? user.cart.length : 0}</span>
+								</div>
+								My Cart
+							</Link>
 						</div>
 					</div>
 					<div className="user_right_nav">
-						<UserInformation />
-						Name: {user.name}
-						Email: {user.email}
-						<br />
-						<br />
-						<br />
-						<br />
+						<UserInformation user={user} />
 						{dashboardContent}
 					</div>
 				</div>
