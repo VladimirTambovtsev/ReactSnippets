@@ -52,7 +52,7 @@ if (localStorage.jwtToken) {
 		store.dispatch(clearCurrentProfile())
 
 		// Redirect
-		window.location.href = '/login'
+		window.location.href = '/signin'
 	}
 }
 
@@ -61,19 +61,24 @@ class App extends Component {
 		return (
 			<Provider store={store}>
 				<Router>
-					<div className="App">
+					<div>
 						<Navbar />
 						<Route exact path="/" component={Landing} />
-						<div className="container mt-4">
+						<div className="page_container">
 							<Route exact path="/signup" component={Register} />
 							<Route exact path="/signin" component={Login} />
 							<Route exact path="/profiles" component={Profiles} />
 							<Route exact path="/profile/:handle" component={Profile} />
 							<Route exact path="/not-found" component={NotFound} />
 							<Switch>
-								<PrivateRoute exact path="/dashboard" component={Dashboard} />
+								<PrivateRoute
+									exact
+									path="/user/dashboard"
+									component={Dashboard}
+								/>
 							</Switch>
 						</div>
+						<Footer />
 					</div>
 				</Router>
 			</Provider>
