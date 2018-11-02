@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { GET_PRODUCTS_POPULAR, GET_PRODUCTS_NEW } from './types'
+import {
+	GET_PRODUCTS_POPULAR,
+	GET_PRODUCTS_NEW,
+	PRODUCT_LOADING,
+} from './types'
 
 export const getProductsNew = () => dispatch => {
 	axios
@@ -14,11 +18,18 @@ export const getProductsNew = () => dispatch => {
 }
 
 export const getProductsPopular = () => dispatch => {
+	dispatch(setProductLoading())
 	axios
 		.get('/api/products/popular')
 		.then(res => {
-			console.log('res.data.data: ', res.data.data)
-			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data.data })
+			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data })
 		})
 		.catch(err => dispatch({ type: GET_PRODUCTS_POPULAR, payload: null }))
+}
+
+// Set loading state
+export const setProductLoading = () => {
+	return {
+		type: PRODUCT_LOADING,
+	}
 }

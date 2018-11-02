@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Slider from '../common/CommonSlider'
 import CallToAction from '../common/CallToAction'
@@ -11,9 +12,10 @@ import {
 
 class Landing extends Component {
 	componentDidMount() {
-		this.props.dispatch(getProductsPopular())
-		// this.props.dispatch(getProductsNew())
+		// this.props.dispatch(getProductsPopular())
+		this.props.getProductsPopular()
 		console.log('props:', this.props)
+		// this.props.dispatch(getProductsNew())
 		// if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')	// If user log in => go to '/dashboard'
 	}
 	render() {
@@ -32,12 +34,16 @@ class Landing extends Component {
 // 	product: state.product,
 // })
 
-function mapStateToProps(state) {
-	console.log('state:', state.product)
-	return { product: state.product }
+Landing.propTypes = {
+	getProductsPopular: PropTypes.func.isRequired,
+	product: PropTypes.object.isRequired,
 }
+
+const mapStateToProps = state => ({
+	product: state.product,
+})
 
 export default connect(
 	mapStateToProps,
-	null
+	{ getProductsPopular }
 )(Landing)

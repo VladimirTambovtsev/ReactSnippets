@@ -38,10 +38,7 @@ router.get('/popular', async (req, res) => {
 			.sort({ 'sold': 'descending' })
 
 		if (products) {
-			res.status(200).json({
-				success: true,
-				data: products
-			})
+			res.status(200).json(products)
 		} else {
 			res.status(204).json({
 				success: true,
