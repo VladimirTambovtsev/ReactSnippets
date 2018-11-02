@@ -1,4 +1,8 @@
-import { GET_PRODUCTS_NEW, GET_PRODUCTS_POPULAR } from '../actions/types'
+import {
+	GET_PRODUCTS_NEW,
+	GET_PRODUCTS_POPULAR,
+	GET_PRODUCTS,
+} from '../actions/types'
 
 const initialState = {
 	products: [],
@@ -8,6 +12,12 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case GET_PRODUCTS:
+			return {
+				...state,
+				products: action.payload,
+				loading: false,
+			}
 		case GET_PRODUCTS_NEW:
 			return { ...state, byNew: action.payload }
 		case GET_PRODUCTS_POPULAR:

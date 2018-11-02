@@ -1,9 +1,24 @@
 import axios from 'axios'
 import {
+	GET_PRODUCTS,
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS_NEW,
 	PRODUCT_LOADING,
 } from './types'
+
+export const getProducts = () => dispatch => {
+	dispatch(setProductLoading())
+	axios
+		.get('/api/products')
+		.then(res => {
+			console.log('res.data: ', res.data)
+			dispatch({
+				type: GET_PRODUCTS,
+				payload: res.data,
+			})
+		})
+		.catch(err => dispatch({ type: GET_PRODUCTS, payload: null }))
+}
 
 export const getProductsNew = () => dispatch => {
 	axios
