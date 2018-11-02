@@ -33,8 +33,8 @@ class Landing extends Component {
 // })
 
 function mapStateToProps(state) {
-	console.log('state:', state.product.bySell)
-	return { bySell: state.product.bySell }
+	console.log('state:', state.product)
+	return { product: state.product }
 }
 
 export default connect(

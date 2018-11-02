@@ -17,8 +17,8 @@ export const getProductsPopular = () => dispatch => {
 	axios
 		.get('/api/products/popular')
 		.then(res => {
-			console.log('res.data: ', res.data)
-			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data })
+			console.log('res.data.data: ', res.data.data)
+			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data.data })
 		})
 		.catch(err => dispatch({ type: GET_PRODUCTS_POPULAR, payload: null }))
 }
