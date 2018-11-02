@@ -28,11 +28,17 @@ class Landing extends Component {
 				<Slider />
 				<CallToAction />
 				<h2>Popular Products</h2>
-				{this.props.product.map(p => console.log(p))}
-				{/* {this.props.product.products.map(fuckingProduct => (
-					<div key={fuckingProduct._id}>fuckingProduct.productName</div>
-				))} */}
-				<CardBlock />
+				{this.props.product.map(
+					({ _id, productName, brand, price, images }) => (
+						<CardBlock
+							key={_id}
+							productName={productName}
+							brand={brand}
+							price={price}
+							images={images}
+						/>
+					)
+				)}
 			</div>
 		)
 	}
