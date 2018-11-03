@@ -10,10 +10,7 @@ router.get('/', async (req, res) => {
 	try {
 		const categories = await Category.find({})
 		if (categories) {
-			res.status(200).json({
-				success: true,
-				data: categories
-			})
+			res.status(200).json(categories)
 		} else {
 			res.status(204).json({
 				success: true,

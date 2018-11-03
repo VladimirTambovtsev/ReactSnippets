@@ -1,11 +1,29 @@
 import React, { Component } from 'react'
 import TopBar from './TopBar'
+import Card from '../common/Card'
+import BrandSidebar from './BrandSidebar'
+import CategorySidebar from './CategorySidebar'
 import { connect } from 'react-redux'
 import { getProducts } from '../../actions/productsActions'
+import { getBrands } from '../../actions/brandActions'
+import { getCategories } from '../../actions/categoryActions'
 
 export class Shop extends Component {
+	state = {
+		grid: false,
+		limit: 6, // ?
+		skip: 0, // ?
+		filters: [
+			{
+				brand: [],
+				categories: [],
+			},
+		],
+	}
 	componentDidMount() {
 		this.props.getProducts()
+		this.props.getBrands()
+		this.props.getCategories()
 	}
 
 	render() {
@@ -15,8 +33,28 @@ export class Shop extends Component {
 				<TopBar title="Browse Products" />
 				<div className="container">
 					<div className="shop_wrapper">
-						<div className="left">left</div>
-						<div className="right">right</div>
+						<div className="left">
+							<BrandSidebar brands={this.props.brand} titleBar="Brands" />
+							<CategorySidebar
+								categories={this.props.category}
+								titleBar="Categories"
+							/>
+						</div>
+						<div className="right">
+							{this.props.product.map(
+								({ _id, productName, brand, price, images }) => (
+									<Card
+										_id={_id}
+										key={_id}
+										images={images}
+										brand={brand}
+										productName={productName}
+										price={price}
+										button={true}
+									/>
+								)
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -25,10 +63,14 @@ export class Shop extends Component {
 }
 
 const mapStateToProps = state => {
-	return { product: state.product.products }
+	return {
+		product: state.product.products,
+		brand: state.brand.brands,
+		category: state.category.categories,
+	}
 }
 
 export default connect(
 	mapStateToProps,
-	{ getProducts }
+	{ getProducts, getBrands, getCategories }
 )(Shop)
