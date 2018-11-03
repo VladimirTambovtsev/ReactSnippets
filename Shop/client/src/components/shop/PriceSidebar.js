@@ -14,24 +14,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 export default class PriceSidebar extends Component {
 	state = {
 		open: false,
-		value: 0,
+		value: '0',
 	}
 
 	handleClick = () => {
 		this.setState({ open: !this.state.open })
-	}
-
-	handleToggle = priceId => () => {
-		const currentIndex = this.state.checked.indexOf(priceId)
-		const newChecked = [...this.state.checked]
-
-		if (currentIndex === -1) {
-			newChecked.push(priceId)
-		} else {
-			newChecked.splice(currentIndex, 1)
-		}
-
-		this.setState({ checked: newChecked })
 	}
 
 	render() {
@@ -62,7 +49,7 @@ export default class PriceSidebar extends Component {
 								{this.props.prices.map(({ title, id }) => (
 									<FormControlLabel
 										key={id}
-										value={id}
+										value={id.toString()}
 										control={<Radio />}
 										label={title}
 									/>
