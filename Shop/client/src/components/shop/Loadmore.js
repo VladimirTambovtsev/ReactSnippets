@@ -7,7 +7,9 @@ const Loadmore = ({ grid, limit, size, products, loadmore }) => {
 			<div className="no_result">Sorry, No products found</div>
 		) : null
 	}
-
+	console.log(size > 0 && size >= limit)
+	console.log('limit:', limit)
+	console.log('size: ', size)
 	return (
 		<div className="card_block_shop">
 			{checkProducts()}
@@ -24,7 +26,7 @@ const Loadmore = ({ grid, limit, size, products, loadmore }) => {
 						/>
 				  ))
 				: null}
-			{products ? (
+			{size > 0 && size >= limit ? (
 				<div className="load_more_container">
 					<span onClick={loadmore}>Load more</span>
 				</div>
