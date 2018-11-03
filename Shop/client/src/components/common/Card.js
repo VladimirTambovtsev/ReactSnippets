@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default class Card extends Component {
 	render() {
-		const { grid, images, productName, price, button } = this.props
+		const { grid, images, productName, price, button, description } = this.props
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div
@@ -13,6 +13,7 @@ export default class Card extends Component {
 							images[0] ? images[0] : '/images/image_not_available.png'
 						}) no-repeat center center`,
 						backgroundSize: 'cover',
+						width: grid ? '230px' : images[0] ? '100%' : 'auto',
 					}}
 				/>
 				<div className="action_container">
@@ -23,17 +24,21 @@ export default class Card extends Component {
 						</Link>
 						<div className="price">${price}</div>
 					</div>
-				</div>
 
-				{grid ? <div className="description">descr</div> : null}
-
-				{button === true ? (
-					<div className="actions">
-						<div className="button_wrap">
-							<button className="card_link">Add To Cart</button>
+					{grid ? (
+						<div className="description">
+							<p>{description}</p>
 						</div>
-					</div>
-				) : null}
+					) : null}
+
+					{button === true ? (
+						<div className="actions">
+							<div className="button_wrap">
+								<button className="card_link">Add To Cart</button>
+							</div>
+						</div>
+					) : null}
+				</div>
 			</div>
 		)
 	}

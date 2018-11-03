@@ -11,17 +11,21 @@ const Loadmore = ({ grid, limit, size, products, loadmore }) => {
 		<div className="card_block_shop">
 			{checkProducts()}
 			{products
-				? products.map(({ _id, productName, brand, price, images }) => (
-						<Card
-							_id={_id}
-							key={_id}
-							images={images}
-							brand={brand}
-							productName={productName}
-							price={price}
-							button={true}
-						/>
-				  ))
+				? products.map(
+						({ _id, productName, brand, price, images, description }) => (
+							<Card
+								_id={_id}
+								key={_id}
+								images={images}
+								brand={brand}
+								productName={productName}
+								price={price}
+								description={description}
+								grid={grid}
+								button={true}
+							/>
+						)
+				  )
 				: null}
 			{products && size > 0 && size >= limit ? (
 				<div className="load_more_container">

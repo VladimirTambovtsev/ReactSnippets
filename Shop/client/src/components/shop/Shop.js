@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faBars from '@fortawesome/fontawesome-free-solid/faBars'
+import faTh from '@fortawesome/fontawesome-free-solid/faTh'
 import TopBar from './TopBar'
 import Card from '../common/Card'
 import BrandSidebar from './BrandSidebar'
@@ -13,7 +16,7 @@ import { getCategories } from '../../actions/categoryActions'
 
 export class Shop extends Component {
 	state = {
-		grid: false,
+		grid: '',
 		limit: 6,
 		skip: 0,
 		filters: [{ brand: [], categories: [], price: [] }],
@@ -61,6 +64,7 @@ export class Shop extends Component {
 		this.setState({ skip: 0 })
 	}
 
+	// @descr: Load more cards; send query to server
 	loadmoreCards = () => {
 		let skip = this.state.skip + this.state.limit
 		this.props.getFilteredProducts(
@@ -72,8 +76,14 @@ export class Shop extends Component {
 		this.setState({ skip })
 	}
 
+	// @descr: make cards by grids in list
+	handleGrid = () => {
+		console.log('hadnleGrid')
+		this.setState({ grid: !this.state.grid ? 'grid_bars' : '' })
+	}
+
 	render() {
-		console.log('props: ', this.props)
+		console.log('state: ', this.state)
 		return (
 			<div>
 				<TopBar title="Browse Products" />
@@ -100,7 +110,20 @@ export class Shop extends Component {
 						</div>
 						<div className="right">
 							<div className="shop_options">
-								<div className="shop_grids clear">grids</div>
+								<div className="shop_grids clear">
+									<div
+										className={`grid_btn ${this.state.grid ? '' : 'active'}`}
+										onClick={() => this.handleGrid()}
+									>
+										<FontAwesomeIcon icon={faTh} />
+									</div>
+									<div
+										className={`grid_btn ${!this.state.grid ? '' : 'active'}`}
+										onClick={() => this.handleGrid()}
+									>
+										<FontAwesomeIcon icon={faBars} />
+									</div>
+								</div>
 							</div>
 							{/* {this.props.product.map(
 								({ _id, productName, brand, price, images }) => (
