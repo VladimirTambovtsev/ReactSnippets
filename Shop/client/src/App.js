@@ -17,6 +17,8 @@ import Landing from './components/layout/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 
+import Shop from './components/shop/Shop'
+
 import Dashboard from './components/dashboard/Dashboard'
 
 import Profiles from './components/profiles/Profiles'
@@ -59,6 +61,7 @@ class App extends Component {
 						<div className="page_container">
 							<Route exact path="/signup" component={Register} />
 							<Route exact path="/signin" component={Login} />
+							<Route exact path="/shop" component={Shop} />
 							<Route exact path="/profiles" component={Profiles} />
 							<Route exact path="/profile/:handle" component={Profile} />
 							<Route exact path="/not-found" component={NotFound} />

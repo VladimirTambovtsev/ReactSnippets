@@ -27,20 +27,37 @@ class Landing extends Component {
 		return (
 			<div>
 				<Slider />
-				<CardBlock>
+				<CardBlock title="Popular Products">
 					{this.props.product.map(
 						({ _id, productName, brand, price, images }) => (
 							<Card
-								grid={_id}
+								_id={_id}
+								key={_id}
 								images={images}
 								brand={brand}
 								productName={productName}
 								price={price}
+								button={false}
 							/>
 						)
 					)}
 				</CardBlock>
 				<CallToAction />
+				<CardBlock title="New Products">
+					{this.props.product.map(
+						({ _id, productName, brand, price, images }) => (
+							<Card
+								_id={_id}
+								key={_id}
+								images={images}
+								brand={brand}
+								productName={productName}
+								price={price}
+								button={false}
+							/>
+						)
+					)}
+				</CardBlock>
 			</div>
 		)
 	}

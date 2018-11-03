@@ -109,6 +109,8 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
 
 	// @TODO: Validate Felds
 
+	// @TODO: check for UNIQUE producName
+
 	// Save
 	const product = new Product({
 		productName: req.body.productName,
