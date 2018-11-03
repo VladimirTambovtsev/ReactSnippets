@@ -11,7 +11,6 @@ export const getProducts = () => dispatch => {
 	axios
 		.get('/api/products')
 		.then(res => {
-			console.log('res.data: ', res.data)
 			dispatch({
 				type: GET_PRODUCTS,
 				payload: res.data,

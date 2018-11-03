@@ -35,7 +35,7 @@ export class Shop extends Component {
 
 		if (sidebarName === 'price') {
 			let priceValues = this.handlePrice(filters)
-			newFilters[sidebarName] = priceValues
+			newFilters.price = priceValues
 		}
 
 		this.setState({ filters: newFilters })
@@ -54,7 +54,7 @@ export class Shop extends Component {
 	}
 
 	render() {
-		console.log('render filters: ', this.state.filters)
+		console.log('filters: ', this.state.filters)
 		return (
 			<div>
 				<TopBar title="Browse Products" />

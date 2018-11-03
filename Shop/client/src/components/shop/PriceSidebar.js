@@ -27,7 +27,6 @@ export default class PriceSidebar extends Component {
 	}
 
 	render() {
-		console.log('price state: ', this.state.value)
 		return (
 			<div className="collapse_item_wrapper">
 				<List style={{ borderBottom: '1px solid #dbdbdb' }}>

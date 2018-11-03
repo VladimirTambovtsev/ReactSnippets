@@ -6,7 +6,6 @@ export const getCategories = () => dispatch => {
 	axios
 		.get('/api/categories')
 		.then(res => {
-			console.log('res.data: ', res.data)
 			dispatch({
 				type: GET_CATEGORIES,
 				payload: res.data,

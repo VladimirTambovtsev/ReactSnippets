@@ -6,7 +6,6 @@ export const getBrands = () => dispatch => {
 	axios
 		.get('/api/brands')
 		.then(res => {
-			console.log('res.data: ', res.data)
 			dispatch({
 				type: GET_BRANDS,
 				payload: res.data,

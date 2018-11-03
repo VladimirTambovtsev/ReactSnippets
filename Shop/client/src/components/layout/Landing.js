@@ -6,11 +6,7 @@ import CallToAction from '../common/CallToAction'
 import CardBlock from '../common/CardBlock'
 import Card from '../common/Card'
 // action creators
-import {
-	getProductsNew,
-	getProductsPopular,
-	getProducts,
-} from '../../actions/productsActions'
+import { getProducts } from '../../actions/productsActions'
 
 class Landing extends Component {
 	componentDidMount() {

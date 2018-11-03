@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default class Card extends Component {
 	render() {
-		const { _id, grid, images, brand, productName, price, button } = this.props
+		const { grid, images, productName, price, button } = this.props
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div
