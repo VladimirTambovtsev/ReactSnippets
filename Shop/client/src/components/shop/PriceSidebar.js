@@ -22,10 +22,12 @@ export default class PriceSidebar extends Component {
 	}
 
 	handleChange = e => {
+		this.props.handleFilters(e.target.value)
 		this.setState({ value: e.target.value })
 	}
 
 	render() {
+		console.log('price state: ', this.state.value)
 		return (
 			<div className="collapse_item_wrapper">
 				<List style={{ borderBottom: '1px solid #dbdbdb' }}>
@@ -53,7 +55,7 @@ export default class PriceSidebar extends Component {
 								{this.props.prices.map(({ title, id }) => (
 									<FormControlLabel
 										key={id}
-										value={id.toString()}
+										value={`${id}`}
 										control={<Radio />}
 										label={title}
 									/>

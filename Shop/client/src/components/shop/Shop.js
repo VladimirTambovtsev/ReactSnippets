@@ -19,7 +19,7 @@ export class Shop extends Component {
 			{
 				brand: [],
 				categories: [],
-				prices: [],
+				price: [],
 			},
 		],
 	}
@@ -37,23 +37,24 @@ export class Shop extends Component {
 			let priceValues = this.handlePrice(filters)
 			newFilters[sidebarName] = priceValues
 		}
+
 		this.setState({ filters: newFilters })
 	}
 
-	handlePrice = filter => {
+	handlePrice = value => {
 		const data = prices
 		let array = []
 
 		for (let key in data) {
-			if (data[key].id === parseInt(filter, 10)) {
-				array = data[key].array
+			if (data[key].id === parseInt(value, 10)) {
+				array = data[key].values
 			}
 		}
 		return array
 	}
 
 	render() {
-		console.log('filters: ', this.state.filters)
+		console.log('render filters: ', this.state.filters)
 		return (
 			<div>
 				<TopBar title="Browse Products" />
