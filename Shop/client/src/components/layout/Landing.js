@@ -17,9 +17,6 @@ class Landing extends Component {
 		// if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')	// If user log in => go to '/dashboard'
 	}
 	render() {
-		console.log('render props:', this.props)
-		console.log('render props prodcut ', this.props.product)
-
 		return (
 			<div>
 				<Slider />

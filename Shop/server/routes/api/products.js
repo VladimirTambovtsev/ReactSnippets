@@ -96,7 +96,41 @@ router.get('/:id', async (req, res) => {
 	}
 })
 
+// @desc: Post filters to get necessary products
+router.post('/filtered', (req, res) => {
+	const order = req.body.order ? req.body.order : 'desc'
+	const sortBy = req.body.sortBy ? req.body.sortBy : '_id'
+	const filters = req.body.filters
+	const limit = req.body.limit ? parseInt(req.body.limit) : 100
+	const skip = parseInt(req.body.skip)
+	const findArgs = {}
 
+	// @TODO: refactor that shit
+	for (const key in filters) {
+		if (filters[key].length > 0) {
+			if (key === 'price') {
+				findArgs[key] = {
+					$gte: filters[key][0],
+					$lte: filters[key][1]
+				}
+			} else {
+				findArgs[key] = req.body.filters[key]
+			}
+		}
+	}
+	Product.find(findArgs)
+		// .populate('brand')
+		// .populate('category')
+		.sort([[sortBy, order]])
+		.skip(skip)
+		.limit(limit)
+		.exec((err, articles) => {
+			if (err) return res.status(400).send(err)
+			res.status(200).json({ size: articles.length, articles })
+		})
+})
+
+// @desc: Add product to shop
 router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
 	// Check role
 	if (req.user.role !== 1) {

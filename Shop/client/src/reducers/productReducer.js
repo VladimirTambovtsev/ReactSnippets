@@ -2,6 +2,7 @@ import {
 	GET_PRODUCTS_NEW,
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS,
+	GET_FILTERED_PRODUCTS,
 } from '../actions/types'
 
 const initialState = {
@@ -25,6 +26,12 @@ export default function(state = initialState, action) {
 				...state,
 				products: action.payload,
 				loading: false,
+			}
+		case GET_FILTERED_PRODUCTS:
+			return {
+				...state,
+				toShop: action.payload,
+				toShopSize: action.payload.length,
 			}
 		default:
 			return state

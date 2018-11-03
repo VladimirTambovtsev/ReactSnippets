@@ -3,6 +3,7 @@ import {
 	GET_PRODUCTS,
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS_NEW,
+	GET_FILTERED_PRODUCTS,
 	PRODUCT_LOADING,
 } from './types'
 
@@ -39,6 +40,28 @@ export const getProductsPopular = () => dispatch => {
 			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data })
 		})
 		.catch(err => dispatch({ type: GET_PRODUCTS_POPULAR, payload: null }))
+}
+
+export const getFilteredProducts = (
+	skip,
+	limit,
+	filters = [],
+	prevState
+) => dispatch => {
+	const data = { limit, skip, filters }
+	dispatch(setProductLoading())
+	const req = axios
+		.post('/api/products/filtered', data)
+		.then(res => {
+			console.log('res.data', res.data)
+			dispatch({ type: GET_FILTERED_PRODUCTS, payload: res.data.articles })
+		})
+		.catch(err =>
+			dispatch({
+				type: GET_FILTERED_PRODUCTS,
+				payload: err,
+			})
+		)
 }
 
 // Set loading state
