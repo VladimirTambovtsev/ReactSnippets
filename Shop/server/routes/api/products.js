@@ -28,7 +28,6 @@ router.get('/popular', async (req, res) => {
 	const limit = 100
 
 	try {
-		// @TODO: Add pagination
 		/*eslint quote-props: ["error", "consistent"]*/
 		const products = await Product.find({})	// { createdOn: { $lte: req.createdOnBefore } }
 			.limit(limit)
@@ -52,7 +51,6 @@ router.get('/hot', async (req, res) => {
 	const limit = 50
 
 	try {
-		// @TODO: Add pagination
 		/*eslint quote-props: ["error", "consistent"]*/
 		const products = await Product.find({})
 			.limit(limit)
@@ -114,6 +112,7 @@ router.post('/filtered', (req, res) => {
 					$lte: filters[key][1]
 				}
 			} else {
+				// @TODO: fix category bug
 				findArgs[key] = req.body.filters[key]
 			}
 		}

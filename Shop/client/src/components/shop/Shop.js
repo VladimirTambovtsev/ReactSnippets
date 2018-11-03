@@ -14,18 +14,12 @@ import { getCategories } from '../../actions/categoryActions'
 export class Shop extends Component {
 	state = {
 		grid: false,
-		limit: 6, // ?
-		skip: 0, // ?
-		filters: [
-			{
-				brand: [],
-				categories: [],
-				price: [],
-			},
-		],
+		limit: 6,
+		skip: 0,
+		filters: [{ brand: [], categories: [], price: [] }],
 	}
 	componentDidMount() {
-		this.props.getProducts()
+		// this.props.getProducts()
 		this.props.getBrands()
 		this.props.getCategories()
 		this.props.getFilteredProducts(
@@ -35,6 +29,7 @@ export class Shop extends Component {
 		)
 	}
 
+	//@descr: Handle filter; make new array
 	handleFilters = (filters, sidebarName) => {
 		const newFilters = { ...this.state.filters }
 		newFilters[sidebarName] = filters
@@ -60,13 +55,21 @@ export class Shop extends Component {
 		return array
 	}
 
+	//@descr: Send query to server
 	filteredProducts = filters => {
-		this.props.getFilteredProducts(
-			0, // skip
-			this.state.limit,
-			filters
-		)
+		this.props.getFilteredProducts(0, this.state.limit, filters) // skip
 		this.setState({ skip: 0 })
+	}
+
+	loadmoreCards = () => {
+		let skip = this.state.skip + this.state.limit
+		this.props.getFilteredProducts(
+			skip,
+			this.state.limit,
+			this.state.filters,
+			this.props.filteredProducts
+		)
+		this.setState({ skip })
 	}
 
 	render() {
@@ -117,7 +120,7 @@ export class Shop extends Component {
 								limit={this.state.limit}
 								size={this.props.filteredProductsSize}
 								products={this.props.filteredProducts}
-								loadmore={() => console.log('load more')}
+								loadmore={() => this.loadmoreCards()}
 							/>
 						</div>
 					</div>

@@ -24,6 +24,11 @@ const Loadmore = ({ grid, limit, size, products, loadmore }) => {
 						/>
 				  ))
 				: null}
+			{products ? (
+				<div className="load_more_container">
+					<span onClick={loadmore}>Load more</span>
+				</div>
+			) : null}
 		</div>
 	)
 }

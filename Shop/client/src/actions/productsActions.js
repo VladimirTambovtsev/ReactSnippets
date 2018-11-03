@@ -46,15 +46,15 @@ export const getFilteredProducts = (
 	skip,
 	limit,
 	filters = [],
-	prevState
+	prevState = []
 ) => dispatch => {
 	const data = { limit, skip, filters }
 	dispatch(setProductLoading())
-	const req = axios
+	axios
 		.post('/api/products/filtered', data)
 		.then(res => {
-			console.log('res.data', res.data)
-			dispatch({ type: GET_FILTERED_PRODUCTS, payload: res.data.articles })
+			let newState = [...prevState, ...res.data.articles]
+			dispatch({ type: GET_FILTERED_PRODUCTS, payload: newState })
 		})
 		.catch(err =>
 			dispatch({
