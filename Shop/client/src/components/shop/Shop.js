@@ -117,7 +117,7 @@ export class Shop extends Component {
 							)} */}
 							<Loadmore
 								grid={this.state.grid}
-								limit={this.state.limit}
+								limit={this.state.skip}
 								size={this.props.filteredProductsSize}
 								products={this.props.filteredProducts}
 								loadmore={() => this.loadmoreCards()}
