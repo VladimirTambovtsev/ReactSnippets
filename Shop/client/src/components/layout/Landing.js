@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Slider from '../common/CommonSlider'
 import CallToAction from '../common/CallToAction'
 import CardBlock from '../common/CardBlock'
+import Card from '../common/Card'
 // action creators
 import {
 	getProductsNew,
@@ -26,19 +27,20 @@ class Landing extends Component {
 		return (
 			<div>
 				<Slider />
+				<CardBlock>
+					{this.props.product.map(
+						({ _id, productName, brand, price, images }) => (
+							<Card
+								grid={_id}
+								images={images}
+								brand={brand}
+								productName={productName}
+								price={price}
+							/>
+						)
+					)}
+				</CardBlock>
 				<CallToAction />
-				<h2>Popular Products</h2>
-				{this.props.product.map(
-					({ _id, productName, brand, price, images }) => (
-						<CardBlock
-							key={_id}
-							productName={productName}
-							brand={brand}
-							price={price}
-							images={images}
-						/>
-					)
-				)}
 			</div>
 		)
 	}
