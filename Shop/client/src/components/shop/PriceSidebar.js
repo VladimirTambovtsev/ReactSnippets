@@ -13,12 +13,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 export default class PriceSidebar extends Component {
 	state = {
-		open: false,
+		open: true,
 		value: '0',
 	}
 
 	handleClick = () => {
 		this.setState({ open: !this.state.open })
+	}
+
+	handleChange = e => {
+		this.setState({ value: e.target.value })
 	}
 
 	render() {

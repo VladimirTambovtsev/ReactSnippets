@@ -19,6 +19,7 @@ export class Shop extends Component {
 			{
 				brand: [],
 				categories: [],
+				prices: [],
 			},
 		],
 	}
@@ -28,20 +29,54 @@ export class Shop extends Component {
 		this.props.getCategories()
 	}
 
+	handleFilters = (filters, sidebarName) => {
+		const newFilters = { ...this.state.filters }
+		newFilters[sidebarName] = filters
+
+		if (sidebarName === 'price') {
+			let priceValues = this.handlePrice(filters)
+			newFilters[sidebarName] = priceValues
+		}
+		this.setState({ filters: newFilters })
+	}
+
+	handlePrice = filter => {
+		const data = prices
+		let array = []
+
+		for (let key in data) {
+			if (data[key].id === parseInt(filter, 10)) {
+				array = data[key].array
+			}
+		}
+		return array
+	}
+
 	render() {
-		console.log('props: ', this.props)
+		console.log('filters: ', this.state.filters)
 		return (
 			<div>
 				<TopBar title="Browse Products" />
 				<div className="container">
 					<div className="shop_wrapper">
 						<div className="left">
-							<BrandSidebar brands={this.props.brand} titleBar="Brands" />
+							<BrandSidebar
+								brands={this.props.brand}
+								titleBar="Brands"
+								handleFilters={filters => this.handleFilters(filters, 'brand')}
+							/>
 							<CategorySidebar
 								categories={this.props.category}
 								titleBar="Categories"
+								handleFilters={filters =>
+									this.handleFilters(filters, 'category')
+								}
 							/>
-							<PriceSidebar prices={prices} titleBar="Prices" />
+							<PriceSidebar
+								prices={prices}
+								titleBar="Prices"
+								handleFilters={filters => this.handleFilters(filters, 'price')}
+							/>
 						</div>
 						<div className="right">
 							{this.props.product.map(
