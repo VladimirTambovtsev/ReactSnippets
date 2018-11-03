@@ -3,6 +3,8 @@ import TopBar from './TopBar'
 import Card from '../common/Card'
 import BrandSidebar from './BrandSidebar'
 import CategorySidebar from './CategorySidebar'
+import PriceSidebar from './PriceSidebar'
+import { prices } from './prices'
 import { connect } from 'react-redux'
 import { getProducts } from '../../actions/productsActions'
 import { getBrands } from '../../actions/brandActions'
@@ -39,6 +41,7 @@ export class Shop extends Component {
 								categories={this.props.category}
 								titleBar="Categories"
 							/>
+							<PriceSidebar prices={prices} titleBar="Prices" />
 						</div>
 						<div className="right">
 							{this.props.product.map(
