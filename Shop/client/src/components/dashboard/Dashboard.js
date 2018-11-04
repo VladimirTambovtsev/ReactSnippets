@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import UserInformation from './UserInformation'
 
 class Dashboard extends Component {
 	render() {
@@ -35,11 +34,13 @@ class Dashboard extends Component {
 						) : null}
 					</div>
 					<div className="user_right_nav">
-						{this.props.children ? (
-							this.props.children
-						) : (
-							<div className="loader" />
-						)}
+						<div className="dashboard_container">
+							{this.props.children ? (
+								this.props.children
+							) : (
+								<div className="loader" />
+							)}
+						</div>
 					</div>
 				</div>
 			</div>

@@ -30,7 +30,6 @@ class Login extends Component {
 	}
 	componentDidMount() {
 		// If user log in => go to '/dashboard'
-		console.log('props: ', this.props)
 		if (this.props.auth.isAuthenticated)
 			this.props.history.push('/user/dashboard')
 	}

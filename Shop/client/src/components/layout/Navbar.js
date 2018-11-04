@@ -18,12 +18,12 @@ class Navbar extends Component {
 			<div>
 				<div className="top">
 					<div className="cart_link">
-						<Link to="/users/cart">
+						<Link to="/user/cart">
 							<span>{user.cart ? user.cart.length : 0}</span>
 							My Cart
 						</Link>
 					</div>
-					<Link to="/users/dashboard"> Profile </Link>
+					<Link to="/user/dashboard"> Profile </Link>
 					<span
 						style={{ cursor: 'pointer' }}
 						onClick={this.onLogoutClick.bind(this)}
