@@ -34,9 +34,21 @@ export default class FileUpload extends Component {
 	}
 
 	// @descr: Show uploaded files
-	showUploadedImages = () => {
-		return null
-	}
+	showUploadedImages = () =>
+		this.state.uploadedFiles.map(item => (
+			<div
+				className="dropzone_box"
+				key={item.public_id}
+				onClick={() => this.onRemove(item.public_id)}
+			>
+				<div
+					className="wrap"
+					style={{ background: `url(${item.url}) no-repeat` }}
+				/>
+			</div>
+		))
+
+	onRemove = id => {}
 
 	render() {
 		return (
@@ -54,6 +66,7 @@ export default class FileUpload extends Component {
 							</div>
 						</Dropzone>
 						{this.showUploadedImages()}
+
 						{this.state.uploading ? (
 							<div
 								className="dropzone_box"
