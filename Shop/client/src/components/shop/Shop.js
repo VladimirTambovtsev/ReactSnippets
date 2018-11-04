@@ -98,7 +98,7 @@ export class Shop extends Component {
 								categories={this.props.category}
 								titleBar="Categories"
 								handleFilters={filters =>
-									this.handleFilters(filters, 'category')
+									this.handleFilters(filters, 'categories')
 								}
 							/>
 							<PriceSidebar

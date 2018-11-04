@@ -4,6 +4,8 @@ import {
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS_NEW,
 	GET_FILTERED_PRODUCTS,
+	ADD_PRODUCT,
+	GET_ERRORS,
 	PRODUCT_LOADING,
 } from './types'
 
@@ -42,6 +44,7 @@ export const getProductsPopular = () => dispatch => {
 		.catch(err => dispatch({ type: GET_PRODUCTS_POPULAR, payload: null }))
 }
 
+//@methods: POST
 export const getFilteredProducts = (
 	skip,
 	limit,
@@ -53,15 +56,38 @@ export const getFilteredProducts = (
 	axios
 		.post('/api/products/filtered', data)
 		.then(res => {
+			console.log('res: ', res)
 			let newState = [...prevState, ...res.data.articles]
 			dispatch({ type: GET_FILTERED_PRODUCTS, payload: newState })
 		})
-		.catch(err =>
+		.catch(err => {
+			console.log(('err: ', err))
 			dispatch({
 				type: GET_FILTERED_PRODUCTS,
 				payload: err,
 			})
-		)
+		})
+}
+
+export const addProduct = (productData, history) => dispatch => {
+	const token = localStorage.getItem('jwtToken')
+	console.log('token: ', token)
+	const headers = {
+		'Content-Type': 'application/json',
+		// eslint-disable-next-line prettier/prettier
+		'Authorization': `${token}`,
+	}
+	axios
+		.post('/api/products/add', productData, { headers })
+		.then(res => {
+			console.log('res: ', res)
+			dispatch({ type: ADD_PRODUCT, payload: res.data })
+		})
+		.then(result => history.push('/user/admin/products'))
+		.catch(err => {
+			console.log('err: ', err)
+			dispatch({ type: GET_ERRORS, payload: err.response.data })
+		})
 }
 
 // Set loading state

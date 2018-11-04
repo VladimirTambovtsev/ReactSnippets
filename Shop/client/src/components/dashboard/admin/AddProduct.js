@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -12,6 +12,7 @@ import Dashboard from '../Dashboard'
 import { connect } from 'react-redux'
 import { getBrands } from '../../../actions/brandActions'
 import { getCategories } from '../../../actions/categoryActions'
+import { addProduct } from '../../../actions/productsActions'
 
 class AddProduct extends Component {
 	state = {
@@ -28,6 +29,17 @@ class AddProduct extends Component {
 		errors: {},
 	}
 
+	componentDidMount() {
+		this.props.getBrands()
+		this.props.getCategories()
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors })
+		}
+	}
+
 	handleCheckbox = name => event => {
 		this.setState({ [name]: event.target.checked })
 	}
@@ -38,31 +50,46 @@ class AddProduct extends Component {
 	onSubmit = e => {
 		e.preventDefault()
 
-		console.log('this.state: ', this.state)
-		// const productData = {
-		// 	productName: this.state.productName,
-		// 	description: this.state.description,
-		// }
+		const productData = {
+			productName: this.state.productName,
+			price: this.state.price,
+			description: this.state.description,
+			shipping: Boolean(this.state.shipping),
+			brand: this.state.brand,
+			categories: this.state.category,
+			frets: this.state.frets,
+			sold: this.state.sold,
+			available: this.state.available,
+			publish: this.state.publish,
+		}
 
-		// this.props.loginUser(userData)
+		this.props.addProduct(productData, this.props.history)
 	}
 
 	render() {
+		// static
 		const shippingOptions = [
 			{ label: 'Select shipping', value: 0 },
 			{ label: 'Yes', value: true },
 			{ label: 'No', value: false },
 		]
-		const brandOptions = [
-			{ label: 'Select brand', value: 0 },
-			{ label: '1', value: 1 },
-			{ label: '2', value: 2 },
-		]
-		const categoryOptions = [
-			{ label: 'Select category', value: 0 },
-			{ label: '1', value: 1 },
-			{ label: '2', value: 2 },
-		]
+
+		const brandOptions = this.props.brand.map(({ _id, brandName }) => {
+			return {
+				label: brandName,
+				value: _id,
+			}
+		})
+		brandOptions.unshift({ label: 'Select brand', value: 0 })
+
+		const categoryOptions = this.props.category.map(({ _id, categoryName }) => {
+			return {
+				label: categoryName,
+				value: _id,
+			}
+		})
+		categoryOptions.unshift({ label: 'Select category', value: 0 })
+
 		const { errors } = this.state
 		return (
 			<Dashboard>
@@ -82,7 +109,7 @@ class AddProduct extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="price">Product Description</label>
+							<label htmlFor="price">Product Price</label>
 							<TextFieldGroup
 								placeholder="Price"
 								name="price"
@@ -94,7 +121,7 @@ class AddProduct extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="publish">Publish product</label>
+							<label htmlFor="publish">Publish Description</label>
 							<TextAreaFieldGroup
 								placeholder="Product Description"
 								name="description"
@@ -217,6 +244,7 @@ class AddProduct extends Component {
 		)
 	}
 }
+
 const mapStateToProps = state => {
 	return {
 		brand: state.brand.brands,
@@ -229,5 +257,6 @@ export default connect(
 	{
 		getCategories,
 		getBrands,
+		addProduct,
 	}
-)(AddProduct)
+)(withRouter(AddProduct))

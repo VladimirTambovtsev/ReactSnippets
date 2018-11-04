@@ -3,6 +3,7 @@ import {
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS,
 	GET_FILTERED_PRODUCTS,
+	ADD_PRODUCT,
 } from '../actions/types'
 
 const initialState = {
@@ -33,6 +34,8 @@ export default function(state = initialState, action) {
 				toShop: action.payload,
 				toShopSize: action.payload.length,
 			}
+		case ADD_PRODUCT:
+			return { ...state, newProduct: action.payload }
 		default:
 			return state
 	}
