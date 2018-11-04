@@ -29,6 +29,8 @@ class Dashboard extends Component {
 									<Link to="/user/admin/products">All Products</Link>
 									<Link to="/user/admin/products/add">Add Product</Link>
 									<Link to="/user/admin/products/delete">Delete Product</Link>
+									<Link to="/user/admin/brands">Brands</Link>
+									<Link to="/user/admin/categories">Categories</Link>
 								</div>
 							</div>
 						) : null}

@@ -118,6 +118,8 @@ router.post('/filtered', (req, res) => {
 			}
 		}
 	}
+	findArgs.publish = true
+
 	Product.find(findArgs)
 		// .populate('brand')
 		// .populate('category')

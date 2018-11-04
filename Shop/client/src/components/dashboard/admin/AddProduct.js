@@ -5,6 +5,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
+import FileUpload from '../../common/FileUpload'
 import TextFieldGroup from '../../common/TextFieldGroup'
 import TextAreaFieldGroup from '../../common/TextAreaFieldGroup'
 import SelectListGroup from '../../common/SelectListGroup'
@@ -26,6 +27,9 @@ class AddProduct extends Component {
 		sold: '0',
 		available: false,
 		publish: false,
+		images: {
+			value: [],
+		},
 		errors: {},
 	}
 
@@ -37,8 +41,20 @@ class AddProduct extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors })
-			console.log('errors receive props: ', nextProps.errors)
 		}
+	}
+
+	imagesHandler = images => {
+		const newFormData = {
+			...this.state.images,
+		}
+		newFormData.value = images
+
+		console.log('newFormData: ', newFormData)
+		this.setState({
+			images: newFormData,
+		})
+		console.log('state AddProduct images: ', images)
 	}
 
 	handleCheckbox = name => event => {
@@ -70,7 +86,6 @@ class AddProduct extends Component {
 			publish: this.state.publish,
 		}
 
-		console.log('prdoctuData: ', productData)
 		this.props.addProduct(productData, this.props.history)
 	}
 
@@ -101,12 +116,15 @@ class AddProduct extends Component {
 		categoryOptions.unshift({ label: 'Select category', value: 0 })
 
 		const { errors } = this.state
-		console.log('errors: ', errors)
 		return (
 			<Dashboard>
 				<div className="add_product_panel">
 					<h1 className="add_product_panel_title">Add Product</h1>
 					<form noValidate onSubmit={this.onSubmit}>
+						<FileUpload
+							imagesHandler={images => this.imagesHandler(images)}
+							reset={errors.images}
+						/>
 						<div className="form-group">
 							<label htmlFor="productName">Product Name</label>
 							<TextFieldGroup
@@ -141,6 +159,7 @@ class AddProduct extends Component {
 								error={errors.description}
 							/>
 						</div>
+
 						<div className="form-group">
 							<label htmlFor="shipping">Product Shipping</label>
 							<SelectListGroup
@@ -206,6 +225,7 @@ class AddProduct extends Component {
 								</Link>
 							</FormHelperText>
 						</div>
+
 						<div className="form-group">
 							<label htmlFor="frets">Guitar Frets</label>
 							<TextFieldGroup

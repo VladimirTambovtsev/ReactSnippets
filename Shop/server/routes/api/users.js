@@ -2,13 +2,25 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+// File Upload
+import cloudinary from 'cloudinary'
+import formidable from 'express-formidable'
+
 import User from '../../models/User'	// Load Models
 import validateRegisterInput from '../../validation/register'
 import validateLoginInput from '../../validation/login'
 
+
 require('dotenv').config()
 
 const router = express.Router()
+
+// upload files
+cloudinary.config({
+	cloud_name: process.env.CLOUD_NAME,
+	api_key: process.env.CLOUD_API_KEY,
+	api_secret: process.env.CLOID_API_SECRET
+})
 
 
 // @desc: Return current user
@@ -116,5 +128,22 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+
+router.post('/uploadimage', formidable(), (req, res) => {
+	// @TODO: check if user signed in
+	
+	// @TODO: check if user is admin
+
+	cloudinary.uploader.upload(req.files.file.path, result => {
+		console.log('result: ', result)
+		res.status(200).send({ 
+			public_id: result.public_id,
+			url: result.url
+		})
+	}, {
+		public_id: `${Date.now()}`,
+		resource_type: 'auto'
+	})
+})
 
 export default router
