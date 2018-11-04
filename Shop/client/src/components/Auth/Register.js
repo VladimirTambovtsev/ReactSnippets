@@ -57,8 +57,8 @@ class Register extends Component {
 							<h1 className="text-center display-4">Sign Up</h1>
 							<p className="text-center">Create a new profile today</p>
 							<form noValidate onSubmit={this.onSubmit}>
-								<div class="form-row">
-									<div class="col">
+								<div className="form-row">
+									<div className="col">
 										<div className="form-group">
 											<label htmlFor="exampleInputText1">Your Name</label>
 											<TextFieldGroup
@@ -73,7 +73,7 @@ class Register extends Component {
 										</div>
 									</div>
 
-									<div class="col">
+									<div className="col">
 										<div className="form-group">
 											<label htmlFor="exampleInputText2">Your Lastname</label>
 											<TextFieldGroup

@@ -5,15 +5,11 @@ import Slider from '../common/CommonSlider'
 import CallToAction from '../common/CallToAction'
 import CardBlock from '../common/CardBlock'
 import Card from '../common/Card'
-// action creators
 import { getProducts } from '../../actions/productsActions'
 
 class Landing extends Component {
 	componentDidMount() {
-		// this.props.dispatch(getProductsPopular())
 		this.props.getProducts()
-		console.log('props:', this.props)
-		// this.props.dispatch(getProductsNew())
 		// if (this.props.auth.isAuthenticated) this.props.history.push('/dashboard')	// If user log in => go to '/dashboard'
 	}
 	render() {
@@ -61,12 +57,7 @@ Landing.propTypes = {
 	product: PropTypes.array.isRequired,
 }
 
-// const mapStateToProps = state => ({
-// 	product: state.product,
-// })
-
-function mapStateToProps(state) {
-	console.log('state.product.products: ', state.product.products)
+const mapStateToProps = state => {
 	return {
 		product: state.product.products,
 	}
