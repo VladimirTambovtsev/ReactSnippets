@@ -18,15 +18,10 @@ module.exports = function validateProductInput(data) {
 	}
 
 	// Product Price
-	if (!Validator.isLength(data.price, { max: 255 })) {
-		errors.price = 'Price must be less than 255 cahracters'
-	}
-	if (Validator.isEmpty(data.price)) {
+	if (!Validator.isNumeric(data.price)) {
 		errors.price = 'Price field is required'
 	}
-	if (typeof data.price !== 'number') {
-		errors.price = 'Price must be in number type'
-	}  
+
 
 	// Product Description
 	if (!Validator.isLength(data.description, { max: 2000 })) {
@@ -39,6 +34,9 @@ module.exports = function validateProductInput(data) {
 	// Shipping
 	if (typeof data.shipping !== 'boolean') {
 		errors.shipping = 'Shipping must be true of false'
+	}
+	if (data.shipping === '') {
+		errors.shipping = 'Shipping field is required'
 	}
 	
 	// Available
@@ -57,7 +55,7 @@ module.exports = function validateProductInput(data) {
 	}
 
 	// Frets
-	if (typeof data.frets !== 'number') {
+	if (!Validator.isNumeric(data.frets)) {
 		errors.frets = 'Frets field must be in number type'
 	}
 

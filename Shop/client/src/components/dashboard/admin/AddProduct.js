@@ -51,14 +51,20 @@ class AddProduct extends Component {
 	onSubmit = e => {
 		e.preventDefault()
 
+		const shipping =
+			this.state.shipping === 'true'
+				? true
+				: this.state.shipping === 'false'
+					? false
+					: this.state.shipping
 		const productData = {
 			productName: this.state.productName,
-			price: parseInt(this.state.price),
+			price: this.state.price,
 			description: this.state.description,
-			shipping: Boolean(this.state.shipping),
+			shipping: shipping,
 			brand: this.state.brand,
 			categories: this.state.categories,
-			frets: parseInt(this.state.frets),
+			frets: this.state.frets,
 			sold: this.state.sold,
 			available: this.state.available,
 			publish: this.state.publish,
