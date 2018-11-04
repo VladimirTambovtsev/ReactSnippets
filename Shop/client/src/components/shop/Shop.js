@@ -22,7 +22,7 @@ export class Shop extends Component {
 		filters: [{ brand: [], categories: [], price: [] }],
 	}
 	componentDidMount() {
-		// this.props.getProducts()
+		// this.props.getProducts()		- @TODO: remove that route/action/disaptcher
 		this.props.getBrands()
 		this.props.getCategories()
 		this.props.getFilteredProducts(
@@ -78,7 +78,6 @@ export class Shop extends Component {
 
 	// @descr: make cards by grids in list
 	handleGrid = () => {
-		console.log('hadnleGrid')
 		this.setState({ grid: !this.state.grid ? 'grid_bars' : '' })
 	}
 

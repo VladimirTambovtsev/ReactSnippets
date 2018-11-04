@@ -62,10 +62,16 @@ class Dashboard extends Component {
 							<Link to="/user/info">User Information</Link>
 							<Link to="/user/cart">
 								<div className="cart_link">
-									<span>{user.cart ? user.cart.length : 0}</span>
+									My Cart - <span>{user.cart ? user.cart.length : 0} </span>
 								</div>
-								My Cart
 							</Link>
+						</div>
+
+						<h2>Admin</h2>
+						<div className="links">
+							<Link to="/user/admin/products">All Products</Link>
+							<Link to="/user/admin/products/add">Add Product</Link>
+							<Link to="/user/admin/products/delete">Delete Product</Link>
 						</div>
 					</div>
 					<div className="user_right_nav">

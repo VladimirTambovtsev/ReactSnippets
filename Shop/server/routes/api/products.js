@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 import Product from '../../models/Product'	// Load Models
+import User from '../../models/User'	// Load Models
 import validateProductInput from '../../validation/product'
 
 
@@ -130,9 +131,10 @@ router.post('/filtered', (req, res) => {
 })
 
 // @desc: Add product to shop
-router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/add', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	// Check role
-	if (req.user.role !== 1) {
+	const user = await User.findOne({ _id: req.user._id })
+	if (user.role !== 1) {
 		return res.status(403).json({ errors: 'No Access Rights' })
 	}
 
@@ -178,7 +180,8 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
 // @desc: Delete product
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	// Check role
-	if (req.user.role !== 1) {
+	const user = await User.findOne({ _id: req.user._id })
+	if (user.role !== 1) {
 		return res.status(403).json({ errors: 'No Access Rights' })
 	}
 
