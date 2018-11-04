@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
 import TextFieldGroup from '../../common/TextFieldGroup'
+import TextAreaFieldGroup from '../../common/TextAreaFieldGroup'
 import SelectListGroup from '../../common/SelectListGroup'
 import Dashboard from '../Dashboard'
 import { connect } from 'react-redux'
@@ -36,6 +37,8 @@ class AddProduct extends Component {
 	}
 	onSubmit = e => {
 		e.preventDefault()
+
+		console.log('this.state: ', this.state)
 		// const productData = {
 		// 	productName: this.state.productName,
 		// 	description: this.state.description,
@@ -79,7 +82,7 @@ class AddProduct extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="price">Product Price</label>
+							<label htmlFor="price">Product Description</label>
 							<TextFieldGroup
 								placeholder="Price"
 								name="price"
@@ -88,6 +91,16 @@ class AddProduct extends Component {
 								value={this.state.price}
 								onChange={this.onChange}
 								error={errors.price}
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="publish">Publish product</label>
+							<TextAreaFieldGroup
+								placeholder="Product Description"
+								name="description"
+								value={this.state.description}
+								onChange={this.onChange}
+								error={errors.description}
 							/>
 						</div>
 						<div className="form-group">
@@ -102,7 +115,6 @@ class AddProduct extends Component {
 								error={errors.shipping}
 							/>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="shipping">Product Available</label>
 							<FormGroup>
@@ -120,7 +132,6 @@ class AddProduct extends Component {
 							</FormGroup>
 							<FormHelperText>Select if product is in stock</FormHelperText>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="brand">Select Brand</label>
 							<SelectListGroup
@@ -139,7 +150,6 @@ class AddProduct extends Component {
 								</Link>
 							</FormHelperText>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="category">Select Category</label>
 							<SelectListGroup
@@ -158,7 +168,6 @@ class AddProduct extends Component {
 								</Link>
 							</FormHelperText>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="frets">Guitar Frets</label>
 							<TextFieldGroup
@@ -171,7 +180,6 @@ class AddProduct extends Component {
 								error={errors.frets}
 							/>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="sold">Sold items</label>
 							<TextFieldGroup
@@ -184,7 +192,6 @@ class AddProduct extends Component {
 								error={errors.sold}
 							/>
 						</div>
-
 						<div className="form-group">
 							<label htmlFor="publish">Publish product</label>
 							<FormGroup>
@@ -201,7 +208,6 @@ class AddProduct extends Component {
 								/>
 							</FormGroup>
 						</div>
-
 						<button type="submit" className="btn btn-block btn-primary mt-5">
 							Save
 						</button>
