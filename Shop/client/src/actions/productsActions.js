@@ -71,7 +71,6 @@ export const getFilteredProducts = (
 
 export const addProduct = (productData, history) => dispatch => {
 	const token = localStorage.getItem('jwtToken')
-	console.log('token: ', token)
 	const headers = {
 		'Content-Type': 'application/json',
 		// eslint-disable-next-line prettier/prettier
@@ -79,15 +78,9 @@ export const addProduct = (productData, history) => dispatch => {
 	}
 	axios
 		.post('/api/products/add', productData, { headers })
-		.then(res => {
-			console.log('res: ', res)
-			dispatch({ type: ADD_PRODUCT, payload: res.data })
-		})
+		.then(res => dispatch({ type: ADD_PRODUCT, payload: res.data }))
 		.then(result => history.push('/user/admin/products'))
-		.catch(err => {
-			console.log('err: ', err)
-			dispatch({ type: GET_ERRORS, payload: err.response.data })
-		})
+		.catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
 }
 
 // Set loading state

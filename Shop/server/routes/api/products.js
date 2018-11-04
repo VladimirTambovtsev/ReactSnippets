@@ -140,7 +140,9 @@ router.post('/add', passport.authenticate('jwt', { session: false }), async (req
 
 	// Check validation
 	const { errors, isValid } = validateProductInput(req.body)
-	if (!isValid) { return res.status(400).json({ errors }) }
+	if (!isValid) {
+		return res.status(400).json(errors)
+	}
 
 	// @TODO: Validate Felds
 

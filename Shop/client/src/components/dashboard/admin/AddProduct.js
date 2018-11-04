@@ -21,7 +21,7 @@ class AddProduct extends Component {
 		description: '',
 		shipping: '',
 		brand: '',
-		category: '',
+		categories: '',
 		frets: '',
 		sold: '0',
 		available: false,
@@ -37,6 +37,7 @@ class AddProduct extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.errors) {
 			this.setState({ errors: nextProps.errors })
+			console.log('errors receive props: ', nextProps.errors)
 		}
 	}
 
@@ -52,17 +53,18 @@ class AddProduct extends Component {
 
 		const productData = {
 			productName: this.state.productName,
-			price: this.state.price,
+			price: parseInt(this.state.price),
 			description: this.state.description,
 			shipping: Boolean(this.state.shipping),
 			brand: this.state.brand,
-			categories: this.state.category,
-			frets: this.state.frets,
+			categories: this.state.categories,
+			frets: parseInt(this.state.frets),
 			sold: this.state.sold,
 			available: this.state.available,
 			publish: this.state.publish,
 		}
 
+		console.log('prdoctuData: ', productData)
 		this.props.addProduct(productData, this.props.history)
 	}
 
@@ -82,15 +84,18 @@ class AddProduct extends Component {
 		})
 		brandOptions.unshift({ label: 'Select brand', value: 0 })
 
-		const categoryOptions = this.props.category.map(({ _id, categoryName }) => {
-			return {
-				label: categoryName,
-				value: _id,
+		const categoryOptions = this.props.categories.map(
+			({ _id, categoryName }) => {
+				return {
+					label: categoryName,
+					value: _id,
+				}
 			}
-		})
+		)
 		categoryOptions.unshift({ label: 'Select category', value: 0 })
 
 		const { errors } = this.state
+		console.log('errors: ', errors)
 		return (
 			<Dashboard>
 				<div className="add_product_panel">
@@ -178,15 +183,15 @@ class AddProduct extends Component {
 							</FormHelperText>
 						</div>
 						<div className="form-group">
-							<label htmlFor="category">Select Category</label>
+							<label htmlFor="categories">Select Category</label>
 							<SelectListGroup
 								placeholder="category"
-								name="category"
-								id="category"
-								value={this.state.category}
+								name="categories"
+								id="categories"
+								value={this.state.categories}
 								onChange={this.onChange}
 								options={categoryOptions}
-								error={errors.category}
+								error={errors.categories}
 							/>
 							<FormHelperText>
 								or{' '}
@@ -248,7 +253,8 @@ class AddProduct extends Component {
 const mapStateToProps = state => {
 	return {
 		brand: state.brand.brands,
-		category: state.category.categories,
+		categories: state.category.categories,
+		errors: state.errors,
 	}
 }
 
