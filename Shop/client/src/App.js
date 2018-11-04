@@ -19,7 +19,10 @@ import Login from './components/auth/Login'
 
 import Shop from './components/shop/Shop'
 
-import Dashboard from './components/dashboard/Dashboard'
+import UserInformation from './components/dashboard/UserInformation'
+import AddProduct from './components/dashboard/admin/AddProduct'
+import DeleteProduct from './components/dashboard/admin/DeleteProduct'
+import AllProducts from './components/dashboard/admin/AllProducts'
 
 import Profiles from './components/profiles/Profiles'
 import Profile from './components/profile/Profile'
@@ -69,7 +72,28 @@ class App extends Component {
 								<PrivateRoute
 									exact
 									path="/user/dashboard"
-									component={Dashboard}
+									component={UserInformation}
+								/>
+							</Switch>
+							<Switch>
+								<PrivateRoute
+									exact
+									path="/user/admin/products"
+									component={AllProducts}
+								/>
+							</Switch>
+							<Switch>
+								<PrivateRoute
+									exact
+									path="/user/admin/products/add"
+									component={AddProduct}
+								/>
+							</Switch>
+							<Switch>
+								<PrivateRoute
+									exact
+									path="/user/admin/products/delete"
+									component={DeleteProduct}
 								/>
 							</Switch>
 						</div>
