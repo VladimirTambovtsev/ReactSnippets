@@ -146,4 +146,18 @@ router.post('/uploadimage', formidable(), (req, res) => {
 	})
 })
 
+
+router.get('/removeimage', (req, res) => {
+	// @TODO: check if user signed in
+
+	// @TODO: check if user is admin
+	
+	const imageId = req.query.public_id
+
+	cloudinary.uploader.destroy(imageId, (error, result) => {
+		if (error) return res.json({ succes: false, error })
+		res.status(200).send('ok')
+	})
+})
+
 export default router

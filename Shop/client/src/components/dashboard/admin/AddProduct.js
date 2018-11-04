@@ -45,16 +45,12 @@ class AddProduct extends Component {
 	}
 
 	imagesHandler = images => {
-		const newFormData = {
+		const newImages = {
 			...this.state.images,
 		}
-		newFormData.value = images
+		newImages.value = images
 
-		console.log('newFormData: ', newFormData)
-		this.setState({
-			images: newFormData,
-		})
-		console.log('state AddProduct images: ', images)
+		this.setState({ images: newImages })
 	}
 
 	handleCheckbox = name => event => {
