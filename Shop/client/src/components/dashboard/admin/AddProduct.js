@@ -59,9 +59,6 @@ class AddProduct extends Component {
 	onSubmit = e => {
 		e.preventDefault()
 
-		// @TODO: add images field: (get urls from state)
-		console.log('images: ', this.state.images)
-
 		const shipping =
 			this.state.shipping === 'true'
 				? true

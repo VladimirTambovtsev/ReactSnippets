@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_BRANDS, BRANDS_LOADING } from './types'
+import { GET_BRANDS, ADD_BRAND, GET_ERRORS, BRANDS_LOADING } from './types'
 
 export const getBrands = () => dispatch => {
 	dispatch(setProductLoading())
@@ -12,6 +12,27 @@ export const getBrands = () => dispatch => {
 			})
 		})
 		.catch(err => dispatch({ type: GET_BRANDS, payload: null }))
+}
+
+export const addBrand = (brandData, history) => dispatch => {
+	const token = localStorage.getItem('jwtToken')
+	console.log('token: ', token)
+	// eslint-disable-next-line prettier/prettier
+	const headers = {
+		'Content-Type': 'application/json',
+		Authorization: `${token}`,
+	}
+	axios
+		.post('/api/brands/add', brandData, { headers })
+		.then(res => {
+			console.log('res.data: ', res.data)
+			dispatch({ type: ADD_BRAND, payload: res.data })
+		})
+		.then(result => history.push('/user/admin/products'))
+		.catch(err => {
+			console.log('err: ', err)
+			dispatch({ type: GET_ERRORS, payload: err.response.data })
+		})
 }
 
 // Set loading state

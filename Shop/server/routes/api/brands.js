@@ -1,6 +1,9 @@
 import express from 'express'
 import passport from 'passport'
-import Brand from '../../models/Brand'	// Load Models
+
+// Load Models
+import Brand from '../../models/Brand'
+import User from '../../models/User'	
 import validateBrandInput from '../../validation/brand'
 
 
@@ -22,9 +25,10 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/add', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	// Check role
-	if (req.user.role !== 1) {
+	const user = await User.findOne({ _id: req.user._id })
+	if (user.role !== 1) {
 		return res.status(403).json({ errors: 'No Access Rights' })
 	}
 

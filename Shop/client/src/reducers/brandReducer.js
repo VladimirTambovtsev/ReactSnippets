@@ -1,4 +1,4 @@
-import { GET_BRANDS, BRANDS_LOADING } from '../actions/types'
+import { GET_BRANDS, ADD_BRAND, BRANDS_LOADING } from '../actions/types'
 
 const initialState = {
 	brands: [],
@@ -17,6 +17,11 @@ export default function(state = initialState, action) {
 				...state,
 				brands: action.payload,
 				loading: false,
+			}
+		case ADD_BRAND:
+			return {
+				...state,
+				newBrand: action.payload.data,
 			}
 		default:
 			return state
