@@ -17,7 +17,7 @@ class Product extends Component {
 		return (
 			<div>
 				<TopBar title="Product" />
-				<h1>Product</h1>
+				<h1>Product info</h1>
 				{product ? product.productName : null}
 			</div>
 		)
