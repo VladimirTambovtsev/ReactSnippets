@@ -44,11 +44,8 @@ router.post('/add', passport.authenticate('jwt', { session: false }), async (req
 	})
 
 	brand.save()
-		.then(doc => {
-			res.json({
-				success: true,
-				data: doc
-			})
+		.then(newBrand => {
+			res.json({ success: true, newBrand })
 		})
 		.catch(err => {
 			res.json({

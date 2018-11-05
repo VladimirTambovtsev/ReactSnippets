@@ -15,6 +15,12 @@ class ManageCategories extends Component {
 		this.props.getCategories()
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors })
+		}
+	}
+
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
@@ -43,7 +49,7 @@ class ManageCategories extends Component {
 							>
 								Categories
 							</h1>
-							<div className="brands_container">
+							<div className="">
 								{this.props.categories.map(({ categoryName, _id }) => (
 									<p key={_id}>{categoryName}</p>
 								))}

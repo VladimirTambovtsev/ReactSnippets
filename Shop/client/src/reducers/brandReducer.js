@@ -8,21 +8,11 @@ const initialState = {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case BRANDS_LOADING:
-			return {
-				...state,
-				loading: true,
-			}
+			return { ...state, loading: true }
 		case GET_BRANDS:
-			return {
-				...state,
-				brands: action.payload,
-				loading: false,
-			}
+			return { ...state, brands: action.payload, loading: false }
 		case ADD_BRAND:
-			return {
-				...state,
-				newBrand: action.payload.data,
-			}
+			return { ...state, newCategory: action.payload }
 		default:
 			return state
 	}

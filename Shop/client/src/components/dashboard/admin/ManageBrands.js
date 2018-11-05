@@ -15,6 +15,12 @@ class ManageBrands extends Component {
 		this.props.getBrands()
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors })
+		}
+	}
+
 	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
@@ -31,6 +37,7 @@ class ManageBrands extends Component {
 
 	render() {
 		const { errors } = this.state
+		console.log('props: ', this.props)
 		return (
 			<Dashboard>
 				<div className="admin_category_wrapper add_product_panel">
@@ -42,10 +49,12 @@ class ManageBrands extends Component {
 							>
 								Brands
 							</h1>
-							<div className="brands_container">
-								{this.props.brands.map(({ brandName, _id }) => (
-									<p key={_id}>{brandName}</p>
-								))}
+							<div className="">
+								{this.props.brands
+									? this.props.brands.map(({ brandName, _id }) => (
+											<p key={_id}>{brandName}</p>
+									  ))
+									: null}
 							</div>
 						</div>
 						<div className="right">
@@ -81,9 +90,12 @@ class ManageBrands extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	brands: state.brand.brands,
-})
+const mapStateToProps = state => {
+	console.log('state: ', state)
+	return {
+		brands: state.brand.brands,
+	}
+}
 
 export default connect(
 	mapStateToProps,
