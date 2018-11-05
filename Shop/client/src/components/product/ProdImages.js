@@ -8,17 +8,51 @@ export default class ProdImages extends Component {
 		lighboxImages: [],
 	}
 
-	// componentDidMount() {
-	// 	if (this.props.images.length > 1) {
-	//         let lighboxImgs = this.props.images
-	// 	}
-	// }
+	handleLightBox = position => {}
+
+	showThumbs = images => {}
 
 	render() {
+		console.log('props: ', this.props)
+		const { images } = this.props
 		return (
-			<div>
-				Images
-				{/* <Lightbox images={this.props.images} isOpen={this.state.lightbox} /> */}
+			<div className="product_image_container">
+				<div className="main_pic">
+					<div
+						onClick={() => this.handleLightBox(0)}
+						style={{
+							background: `url(${
+								images[0] ? images[0] : '/images/image_not_available.png'
+							}) no-repeat center center`,
+						}}
+					/>
+				</div>
+				<div className="main_thumbs">
+					{images
+						? images.map(
+								(img, index) =>
+									images.length > 1 ? (
+										<div
+											key={index}
+											onClick={() => this.handleLightBox(index)}
+											className="thumb"
+											style={{ background: `url(${img}) no-repeat` }}
+										/>
+									) : null
+						  )
+						: null}
+				</div>
+				{/* {this.props.images.length > 1 ? (
+					<Lightbox
+						images={this.props.images}
+						isOpen={this.state.lightbox}
+						onClickPrev={this.goToPrevious}
+						onClickNext={this.goToNext}
+						onClose={this.closeLightbox}
+					/>
+				) : (
+					<img src={this.props.images[0]} alt="" />
+				)} */}
 			</div>
 		)
 	}
