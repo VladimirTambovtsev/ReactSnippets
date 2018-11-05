@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom'
 
 export default class Card extends Component {
 	render() {
-		const { grid, images, productName, price, button, description } = this.props
+		const {
+			_id,
+			grid,
+			images,
+			productName,
+			price,
+			button,
+			description,
+		} = this.props
 		images.map(img => console.log('img: ', img.url))
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
@@ -20,7 +28,14 @@ export default class Card extends Component {
 				<div className="action_container">
 					<div className="tags">
 						{/* <div className="brand">brand: {brand}</div> */}
-						<Link to={`/product/${productName.replace(/\s/g, '-')}`}>
+						{/* <Link to={`/product/${productName.replace(/\s/g, '-')}`}> */}
+						<Link
+							to={{
+								pathname: `/product/${productName.replace(/\s/g, '-')}`,
+								search: '',
+								state: { productId: _id },
+							}}
+						>
 							<div className="name">{productName}</div>
 						</Link>
 						<div className="price">${price}</div>

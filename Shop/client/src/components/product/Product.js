@@ -5,14 +5,12 @@ import TopBar from '../shop/TopBar'
 
 class Product extends Component {
 	componentDidMount() {
-		// @TODO: get product by name from URL
-		const productId = this.props.history.location.pathname.split('/')[2]
-
-		this.props.getProductById(productId)
+		this.props.getProductById(this.props.location.state.productId)
 	}
 
 	render() {
 		const { product } = this.props
+		console.log('props: ', this.props)
 		console.log('product: ', product)
 		return (
 			<div>
