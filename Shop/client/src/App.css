@@ -918,3 +918,7 @@ footer .business_nfo .nfo {
 .cursor_pointer {
 	cursor: pointer;
 }
+
+.product_description {
+	font-weight: 100;
+}
