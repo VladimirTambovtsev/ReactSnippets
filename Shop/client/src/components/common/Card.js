@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 export default class Card extends Component {
 	render() {
 		const { grid, images, productName, price, button, description } = this.props
+		images.map(img => console.log('img: ', img.url))
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div

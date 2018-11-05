@@ -27,9 +27,7 @@ class AddProduct extends Component {
 		sold: '0',
 		available: false,
 		publish: false,
-		images: {
-			value: [],
-		},
+		images: [],
 		errors: {},
 	}
 
@@ -45,12 +43,10 @@ class AddProduct extends Component {
 	}
 
 	imagesHandler = images => {
-		const newImages = {
-			...this.state.images,
-		}
-		newImages.value = images
+		let imgArray = []
+		images.map(img => imgArray.push(img.url))
 
-		this.setState({ images: newImages })
+		this.setState({ images: imgArray })
 	}
 
 	handleCheckbox = name => event => {
@@ -64,6 +60,7 @@ class AddProduct extends Component {
 		e.preventDefault()
 
 		// @TODO: add images field: (get urls from state)
+		console.log('images: ', this.state.images)
 
 		const shipping =
 			this.state.shipping === 'true'
@@ -82,6 +79,7 @@ class AddProduct extends Component {
 			sold: this.state.sold,
 			available: this.state.available,
 			publish: this.state.publish,
+			images: this.state.images,
 		}
 
 		this.props.addProduct(productData, this.props.history)
