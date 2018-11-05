@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 import Category from '../../models/Category'	// Load Models
+import User from '../../models/User'	// Load Models
 import validateCategoryInput from '../../validation/category'
 
 
@@ -22,9 +23,10 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.post('/add', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/add', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	// Check role
-	if (req.user.role !== 1) {
+	const user = await User.findOne({ _id: req.user._id })
+	if (user.role !== 1) {
 		return res.status(403).json({ errors: 'No Access Rights' })
 	}
 
@@ -38,11 +40,8 @@ router.post('/add', passport.authenticate('jwt', { session: false }), (req, res)
 	})
 
 	category.save()
-		.then(categ => {
-			res.json({
-				success: true,
-				data: categ
-			})
+		.then(categories => {
+			res.json(categories)
 		})
 		.catch(err => {
 			res.json({
