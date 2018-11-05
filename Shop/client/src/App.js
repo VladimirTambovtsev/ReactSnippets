@@ -18,6 +18,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 
 import Shop from './components/shop/Shop'
+import Product from './components/product/Product'
 
 import UserInformation from './components/dashboard/UserInformation'
 import AddProduct from './components/dashboard/admin/AddProduct'
@@ -67,6 +68,7 @@ class App extends Component {
 							<Route exact path="/signup" component={Register} />
 							<Route exact path="/signin" component={Login} />
 							<Route exact path="/shop" component={Shop} />
+							<Route exact path="/product/:id" component={Product} />
 							<Route exact path="/profiles" component={Profiles} />
 							<Route exact path="/profile/:handle" component={Profile} />
 							<Route exact path="/not-found" component={NotFound} />

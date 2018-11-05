@@ -114,10 +114,6 @@ class AddProduct extends Component {
 				<div className="add_product_panel">
 					<h1 className="add_product_panel_title">Add Product</h1>
 					<form noValidate onSubmit={this.onSubmit}>
-						<FileUpload
-							imagesHandler={images => this.imagesHandler(images)}
-							reset={errors.images}
-						/>
 						<div className="form-group">
 							<label htmlFor="productName">Product Name</label>
 							<TextFieldGroup
@@ -258,6 +254,12 @@ class AddProduct extends Component {
 									label="Publish to global store"
 								/>
 							</FormGroup>
+						</div>
+						<div className="form-group">
+							<FileUpload
+								imagesHandler={images => this.imagesHandler(images)}
+								reset={errors.images}
+							/>
 						</div>
 						<button type="submit" className="btn btn-block btn-primary mt-5">
 							Save

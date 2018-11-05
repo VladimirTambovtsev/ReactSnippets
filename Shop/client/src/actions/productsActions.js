@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+	GET_PRODUCT_BY_ID,
 	GET_PRODUCTS,
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS_NEW,
@@ -8,6 +9,19 @@ import {
 	GET_ERRORS,
 	PRODUCT_LOADING,
 } from './types'
+
+export const getProductById = id => dispatch => {
+	dispatch(setProductLoading())
+	axios
+		.get(`/api/products/${id}`)
+		.then(res => {
+			dispatch({
+				type: GET_PRODUCT_BY_ID,
+				payload: res.data,
+			})
+		})
+		.catch(err => dispatch({ type: GET_PRODUCT_BY_ID, payload: null }))
+}
 
 export const getProducts = () => dispatch => {
 	dispatch(setProductLoading())

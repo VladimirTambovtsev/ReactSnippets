@@ -80,12 +80,9 @@ router.get('/:id', async (req, res) => {
 			.populate('categories')
 
 		if (product) {
-			res.status(200).json({
-				success: true,
-				data: product
-			})
+			res.status(200).json(product)
 		} else {
-			res.status(204).json({
+			res.status(404).json({
 				success: true,
 				data: ['No Such Product']
 			})

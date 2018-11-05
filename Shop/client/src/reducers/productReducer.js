@@ -1,4 +1,5 @@
 import {
+	GET_PRODUCT_BY_ID,
 	GET_PRODUCTS_NEW,
 	GET_PRODUCTS_POPULAR,
 	GET_PRODUCTS,
@@ -14,6 +15,11 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case GET_PRODUCT_BY_ID:
+			return {
+				...state,
+				product: action.payload,
+			}
 		case GET_PRODUCTS:
 			return {
 				...state,
