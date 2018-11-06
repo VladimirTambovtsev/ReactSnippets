@@ -21,8 +21,7 @@ class Product extends Component {
 		} else {
 			const brand = product.brand
 			const category = product.categories
-			if (!brand) return <h2>Loading...</h2>
-			if (!category) return <h2>Loading...</h2>
+			if (!brand || !category) return <h2>Loading...</h2>
 			return (
 				<div>
 					<TopBar title="Product" />

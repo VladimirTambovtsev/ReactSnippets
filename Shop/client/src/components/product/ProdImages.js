@@ -30,7 +30,9 @@ export default class ProdImages extends Component {
 						onClick={() => this.handleLightBox(0)}
 						style={{
 							background: `url(${
-								images ? images[0] : '/images/image_not_available.png'
+								images && images.length > 0
+									? images[0]
+									: '/images/image_not_available.png'
 							}) no-repeat center center`,
 						}}
 					/>
@@ -50,14 +52,13 @@ export default class ProdImages extends Component {
 						  )
 						: null}
 				</div>
-				{this.state.lightbox ? (
-					<ImageLightbox
-						images={images}
-						open={this.state.lightbox}
-						// ={this.state.imgPosition}
-						onClose={() => this.handleLightBoxClose()}
-					/>
-				) : null}
+
+				<ImageLightbox
+					images={images}
+					open={this.state.lightbox}
+					position={this.state.imgPosition}
+					onClose={() => this.handleLightBoxClose()}
+				/>
 			</div>
 		)
 	}
