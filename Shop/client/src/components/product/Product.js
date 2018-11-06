@@ -12,42 +12,44 @@ class Product extends Component {
 		this.props.getProductById('5be08339439355fb6e9a03bf')
 	}
 
-	addToCartHandler = id => {}
+	// addToCartHandler = id => {}
 
 	render() {
-		const { product } = this.props
-		console.log('props: ', this.props)
-		console.log('product: ', product)
-		return (
-			<div>
-				<TopBar title="Product" />
-				<div className="container">
-					{product ? (
-						<div className="product_detail_wrapper">
-							<div className="left">
-								<div style={{ width: '500px' }}>
-									<ProdImages images={product.images} />
+		const { product, loading } = this.props
+		if (loading) {
+			return <h1>Loading...</h1>
+		} else {
+			const brand = product.brand
+			const category = product.categories
+			if (!brand) return <h2>Loading...</h2>
+			if (!category) return <h2>Loading...</h2>
+			return (
+				<div>
+					<TopBar title="Product" />
+					<div className="container">
+						{product && loading === false ? (
+							<div className="product_detail_wrapper">
+								<div className="left">
+									<div style={{ width: '500px' }}>
+										<ProdImages images={product.images} />
+									</div>
+								</div>
+								<div className="right">
+									<ProdInfo
+										addToCart={id => this.addToCartHandler(id)}
+										product={product}
+										brand={brand}
+										category={category}
+									/>
 								</div>
 							</div>
-							<div className="right">
-								<ProdInfo
-									addToCart={id => this.addToCartHandler(id)}
-									brand={product.brand}
-									description={product.description}
-									shipping={product.shipping}
-									available={product.available}
-									price={product.price}
-									frets={product.frets}
-									categories={product.categories}
-								/>
-							</div>
-						</div>
-					) : (
-						<h1 style={{ textAlign: 'center' }}>Loading...</h1>
-					)}
+						) : (
+							<h1 style={{ textAlign: 'center' }}>Loading...</h1>
+						)}
+					</div>
 				</div>
-			</div>
-		)
+			)
+		}
 	}
 }
 
@@ -56,9 +58,10 @@ class Product extends Component {
 // })
 
 function mapStateToProps(state) {
-	console.log('state: ', state.product.product)
+	console.log('state: ', state.product)
 	return {
-		product: state.product.product.data,
+		product: state.product.product,
+		loading: state.product.loading,
 	}
 }
 

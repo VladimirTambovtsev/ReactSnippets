@@ -30,7 +30,7 @@ export default class ProdImages extends Component {
 						onClick={() => this.handleLightBox(0)}
 						style={{
 							background: `url(${
-								images[0] ? images[0] : '/images/image_not_available.png'
+								images ? images[0] : '/images/image_not_available.png'
 							}) no-repeat center center`,
 						}}
 					/>

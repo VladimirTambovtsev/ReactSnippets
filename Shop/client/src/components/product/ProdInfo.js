@@ -4,15 +4,11 @@ import faTruck from '@fortawesome/fontawesome-free-solid/faTruck'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 
-const ProdInfo = ({
-	brand,
-	description,
-	shipping,
-	available,
-	price,
-	frets,
-	categories,
-}) => {
+const ProdInfo = ({ product, brand, category }) => {
+	const { description, shipping, available, price, frets } = product
+	console.log('brand: ', brand)
+	if (!brand) return <h2>No brand</h2>
+
 	return (
 		<div>
 			<h1>Brand: {brand.brandName}</h1>
@@ -51,12 +47,7 @@ const ProdInfo = ({
 			<div className="product_actions">
 				<div className="price">${price}</div>
 				<div className="cart">
-					<button
-						className="add_to_cart_link"
-						// runAction={() => console.log('add to cart')}
-					>
-						Add
-					</button>
+					<button className="add_to_cart_link">Add</button>
 				</div>
 			</div>
 			<div className="product_specifications">
@@ -67,7 +58,7 @@ const ProdInfo = ({
 				</div>
 				<div className="item">
 					<strong>Category: </strong>
-					{categories.categoryName}
+					{category.categoryName}
 				</div>
 			</div>
 		</div>

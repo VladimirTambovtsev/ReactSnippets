@@ -5,6 +5,7 @@ import {
 	GET_PRODUCTS,
 	GET_FILTERED_PRODUCTS,
 	ADD_PRODUCT,
+	PRODUCT_LOADING,
 } from '../actions/types'
 
 const initialState = {
@@ -15,11 +16,16 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case PRODUCT_LOADING:
+			return {
+				...state,
+				loading: true,
+			}
 		case GET_PRODUCT_BY_ID:
-			console.log('action.payload: ', action.payload)
 			return {
 				...state,
 				product: action.payload,
+				loading: false,
 			}
 		case GET_PRODUCTS:
 			return {
@@ -40,6 +46,7 @@ export default function(state = initialState, action) {
 				...state,
 				toShop: action.payload,
 				toShopSize: action.payload.length,
+				loading: false,
 			}
 		case ADD_PRODUCT:
 			return { ...state, newProduct: action.payload }
