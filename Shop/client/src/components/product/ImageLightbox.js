@@ -3,6 +3,7 @@ import Lightbox from 'react-images'
 
 export default class ImageLightbox extends Component {
 	state = {
+		imgPosition: this.props.position,
 		imgArray: [],
 	}
 
@@ -14,20 +15,26 @@ export default class ImageLightbox extends Component {
 		this.setState({ imgArray })
 	}
 
+	goToPrevious = () => {
+		this.setState({ imgPosition: this.state.imgPosition - 1 })
+	}
+
+	goToNext = () => {
+		this.setState({ imgPosition: this.state.imgPosition + 1 })
+	}
+
 	closeLightbox = () => {
 		this.props.onClose()
 	}
 
 	render() {
-		console.log('this.props: ', this.props)
-		console.log('state.imgArray: ', this.state.imgArray)
 		return (
 			<Lightbox
-				currentImage={this.props.position}
+				currentImage={this.state.imgPosition}
 				images={this.state.imgArray}
 				isOpen={this.props.open}
-				onClickPrev={() => this.gotoPrevious()}
-				onClickNext={() => this.gotoNext()}
+				onClickPrev={() => this.goToPrevious()}
+				onClickNext={() => this.goToNext()}
 				onClose={() => this.closeLightbox()}
 			/>
 		)
