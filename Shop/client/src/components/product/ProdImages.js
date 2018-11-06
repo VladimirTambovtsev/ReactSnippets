@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Lightbox from 'react-images'
+import ImageLightbox from './ImageLightbox'
 
 export default class ProdImages extends Component {
 	state = {
@@ -8,13 +8,21 @@ export default class ProdImages extends Component {
 		lighboxImages: [],
 	}
 
-	handleLightBox = position => {}
+	handleLightBox = position => {
+		if (this.props.images.length > 1) {
+			this.setState({ lightbox: true, imgPosition: position })
+			console.log('state:', this.state)
+		}
+	}
 
-	showThumbs = images => {}
+	handleLightBoxClose = () => {
+		this.setState({ lightbox: false })
+	}
 
 	render() {
 		console.log('props: ', this.props)
 		const { images } = this.props
+		console.log('images: ', images)
 		return (
 			<div className="product_image_container">
 				<div className="main_pic">
@@ -42,17 +50,14 @@ export default class ProdImages extends Component {
 						  )
 						: null}
 				</div>
-				{/* {this.props.images.length > 1 ? (
-					<Lightbox
-						images={this.props.images}
-						isOpen={this.state.lightbox}
-						onClickPrev={this.goToPrevious}
-						onClickNext={this.goToNext}
-						onClose={this.closeLightbox}
+				{this.state.lightbox ? (
+					<ImageLightbox
+						images={images}
+						open={this.state.lightbox}
+						// ={this.state.imgPosition}
+						onClose={() => this.handleLightBoxClose()}
 					/>
-				) : (
-					<img src={this.props.images[0]} alt="" />
-				)} */}
+				) : null}
 			</div>
 		)
 	}

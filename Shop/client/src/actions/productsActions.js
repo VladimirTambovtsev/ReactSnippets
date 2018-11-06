@@ -15,12 +15,16 @@ export const getProductById = id => dispatch => {
 	axios
 		.get(`/api/products/${id}`)
 		.then(res => {
+			console.log('res.data: ', res.data)
 			dispatch({
 				type: GET_PRODUCT_BY_ID,
 				payload: res.data,
 			})
 		})
-		.catch(err => dispatch({ type: GET_PRODUCT_BY_ID, payload: null }))
+		.catch(err => {
+			console.log('err: ', err)
+			dispatch({ type: GET_PRODUCT_BY_ID, payload: null })
+		})
 }
 
 export const getProducts = () => dispatch => {

@@ -8,7 +8,8 @@ import TopBar from '../shop/TopBar'
 class Product extends Component {
 	componentDidMount() {
 		// @TODO: add finding product by name on server
-		this.props.getProductById(this.props.location.state.productId)
+		// this.props.getProductById(this.props.location.state.productId)
+		this.props.getProductById('5be08339439355fb6e9a03bf')
 	}
 
 	addToCartHandler = id => {}
@@ -41,16 +42,25 @@ class Product extends Component {
 								/>
 							</div>
 						</div>
-					) : null}
+					) : (
+						<h1 style={{ textAlign: 'center' }}>Loading...</h1>
+					)}
 				</div>
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = state => ({
-	product: state.product.product.data,
-})
+// const mapStateToProps = state => ({
+// 	product: state.product.product.data,
+// })
+
+function mapStateToProps(state) {
+	console.log('state: ', state.product.product)
+	return {
+		product: state.product.product.data,
+	}
+}
 
 export default connect(
 	mapStateToProps,

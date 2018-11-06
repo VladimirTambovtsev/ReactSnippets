@@ -53,7 +53,7 @@ const ProdInfo = ({
 				<div className="cart">
 					<button
 						className="add_to_cart_link"
-						runAction={() => console.log('add to cart')}
+						// runAction={() => console.log('add to cart')}
 					>
 						Add
 					</button>
