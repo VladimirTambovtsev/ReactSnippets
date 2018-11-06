@@ -7,9 +7,15 @@ import TopBar from '../shop/TopBar'
 
 class Product extends Component {
 	componentDidMount() {
-		// @TODO: refactor finding product by name on server
-		// this.props.getProductById(this.props.location.state.productId)
+		// @TODO: Refactor finding product by name on server
+		// const id = this.props.match.params.id 	// get /:id from route
+		// this.props.getProductById(this.props.location.state.productId)	// get from <Link/> state
 		this.props.getProductById('5be08339439355fb6e9a03bf')
+	}
+
+	componentWillUnmount() {
+		// @TODO: Make clearProduct action creator
+		// this.props.clearProductById()
 	}
 
 	// addToCartHandler = id => {}

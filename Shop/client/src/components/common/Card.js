@@ -1,7 +1,19 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { addToCart } from '../../actions/cartActions'
 
-export default class Card extends Component {
+class Card extends Component {
+	handleButton = () => {
+		if (this.props.auth.isAuthenticated === true) {
+			this.props.addToCart(this.props._id)
+			console.log('auth')
+		} else {
+			console.log('not auth')
+			this.props.history.push('/signin')
+		}
+	}
 	render() {
 		const {
 			_id,
@@ -11,6 +23,7 @@ export default class Card extends Component {
 			price,
 			button,
 			description,
+			auth,
 		} = this.props
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
@@ -26,7 +39,6 @@ export default class Card extends Component {
 				/>
 				<div className="action_container">
 					<div className="tags">
-						{/* <div className="brand">brand: {brand}</div> */}
 						{/* <Link to={`/product/${productName.replace(/\s/g, '-')}`}> */}
 						<Link
 							to={{
@@ -49,7 +61,9 @@ export default class Card extends Component {
 					{button === true ? (
 						<div className="actions">
 							<div className="button_wrap">
-								<button className="card_link">Add To Cart</button>
+								<button className="card_link" onClick={this.handleButton}>
+									Add To Cart
+								</button>
 							</div>
 						</div>
 					) : null}
@@ -58,3 +72,13 @@ export default class Card extends Component {
 		)
 	}
 }
+
+Card.propTypes = {
+	auth: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+	auth: state.auth,
+})
+
+export default connect(mapStateToProps)(Card)
