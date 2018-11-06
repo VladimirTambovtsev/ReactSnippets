@@ -162,7 +162,7 @@ router.get('/removeimage', (req, res) => {
 })
 
 
-router.post('/cart', passport.authenticate('jwt', { session: false }), async (req, res) => {
+router.post('/cart/:productId', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const user = await User.findOne({ _id: req.user._id })
 	if (!user) {
 		return res.status(403).json({ error: 'You must sign in to add products to cart' })
@@ -170,7 +170,7 @@ router.post('/cart', passport.authenticate('jwt', { session: false }), async (re
 
 	let alreadyInCart
 	user.cart.forEach(item => {
-		if (item.id == req.query.productId) {
+		if (item.id == req.params.productId) {
 			alreadyInCart = true
 		}
 	})
@@ -178,12 +178,14 @@ router.post('/cart', passport.authenticate('jwt', { session: false }), async (re
 	if (alreadyInCart) {
 		console.log('already in cart')
 	} else {
+		console.log('add to cart')
 		// @TODO: Replace to await
+
 		User.findOneAndUpdate(
 			{ _id: user.id }, {
 				$push: {
 					cart: { 
-						id: mongoose.Types.ObjectId(req.query.productId), 
+						id: mongoose.Types.ObjectId(req.params.productId), 
 						quantity: 1, 
 						date: Date.now() 
 					} 
@@ -192,6 +194,7 @@ router.post('/cart', passport.authenticate('jwt', { session: false }), async (re
 			(err, doc) => {
 				if (err) return res.json({ success: false, err })
 				res.status(200).json(doc.cart)
+				console.log('doc.cart', doc.cart)
 			}
 		)
 	}

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
 import { clearCurrentProfile } from '../../actions/profileActions'
+import { addToCart } from '../../actions/cartActions'
 
 class Navbar extends Component {
 	onLogoutClick(e) {
@@ -14,12 +15,14 @@ class Navbar extends Component {
 
 	render() {
 		const { isAuthenticated, user } = this.props.auth
+		console.log('navbar props: ', this.props)
 		const authLinks = (
 			<div>
 				<div className="top">
 					<div className="cart_link">
 						<Link to="/user/cart">
-							<span>{user.cart ? user.cart.length : 0}</span>
+							{/* <span>{user.cart ? user.cart.length : 0}</span> */}
+							<span>{this.props.cart.length}</span>
 							My Cart
 						</Link>
 					</div>
@@ -71,11 +74,15 @@ Navbar.propTypes = {
 	auth: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => ({
-	auth: state.auth,
-})
+const mapStateToProps = state => {
+	console.log('navbar state:', state)
+	return {
+		auth: state.auth,
+		cart: state.cart.products,
+	}
+}
 
 export default connect(
 	mapStateToProps,
-	{ logoutUser, clearCurrentProfile }
+	{ logoutUser, clearCurrentProfile, addToCart }
 )(Navbar)

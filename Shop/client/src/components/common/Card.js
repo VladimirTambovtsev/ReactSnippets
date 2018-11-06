@@ -77,8 +77,17 @@ Card.propTypes = {
 	auth: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => ({
-	auth: state.auth,
-})
+const mapStateToProps = state => {
+	console.log('state: ', state)
+	return {
+		auth: state.auth,
+		cart: state.cart.cartProducts,
+	}
+}
 
-export default withRouter(connect(mapStateToProps)(Card))
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ addToCart }
+	)(Card)
+)
