@@ -11,7 +11,6 @@ export default class ProdImages extends Component {
 	handleLightBox = position => {
 		if (this.props.images.length > 1) {
 			this.setState({ lightbox: true, imgPosition: position })
-			console.log('state:', this.state)
 		}
 	}
 
@@ -20,9 +19,7 @@ export default class ProdImages extends Component {
 	}
 
 	render() {
-		console.log('props: ', this.props)
 		const { images } = this.props
-		console.log('images: ', images)
 		return (
 			<div className="product_image_container">
 				<div className="main_pic">

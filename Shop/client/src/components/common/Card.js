@@ -12,7 +12,6 @@ export default class Card extends Component {
 			button,
 			description,
 		} = this.props
-		images.map(img => console.log('img: ', img.url))
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div

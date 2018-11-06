@@ -71,7 +71,8 @@ class App extends Component {
 							<Route exact path="/product/:id" component={Product} />
 							<Route exact path="/profiles" component={Profiles} />
 							<Route exact path="/profile/:handle" component={Profile} />
-							<Route exact path="/not-found" component={NotFound} />
+							{/* <Route path="*" component={NotFound} status={404} /> */}
+
 							<Switch>
 								<PrivateRoute
 									exact

@@ -14,41 +14,22 @@ export const getProductById = id => dispatch => {
 	dispatch(setProductLoading())
 	axios
 		.get(`/api/products/${id}`)
-		.then(res => {
-			console.log('res.data: ', res.data)
-			dispatch({
-				type: GET_PRODUCT_BY_ID,
-				payload: res.data,
-			})
-		})
-		.catch(err => {
-			console.log('err: ', err)
-			dispatch({ type: GET_PRODUCT_BY_ID, payload: null })
-		})
+		.then(res => dispatch({ type: GET_PRODUCT_BY_ID, payload: res.data }))
+		.catch(err => dispatch({ type: GET_PRODUCT_BY_ID, payload: null }))
 }
 
 export const getProducts = () => dispatch => {
 	dispatch(setProductLoading())
 	axios
 		.get('/api/products')
-		.then(res => {
-			dispatch({
-				type: GET_PRODUCTS,
-				payload: res.data,
-			})
-		})
+		.then(res => dispatch({ type: GET_PRODUCTS, payload: res.data }))
 		.catch(err => dispatch({ type: GET_PRODUCTS, payload: null }))
 }
 
 export const getProductsNew = () => dispatch => {
 	axios
 		.get('/api/products/hot')
-		.then(res =>
-			dispatch({
-				type: GET_PRODUCTS_NEW,
-				payload: res.data,
-			})
-		)
+		.then(res => dispatch({ type: GET_PRODUCTS_NEW, payload: res.data }))
 		.catch(err => dispatch({ type: GET_PRODUCTS_NEW, payload: null }))
 }
 
@@ -56,9 +37,7 @@ export const getProductsPopular = () => dispatch => {
 	dispatch(setProductLoading())
 	axios
 		.get('/api/products/popular')
-		.then(res => {
-			dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data })
-		})
+		.then(res => dispatch({ type: GET_PRODUCTS_POPULAR, payload: res.data }))
 		.catch(err => dispatch({ type: GET_PRODUCTS_POPULAR, payload: null }))
 }
 
@@ -74,17 +53,10 @@ export const getFilteredProducts = (
 	axios
 		.post('/api/products/filtered', data)
 		.then(res => {
-			console.log('res: ', res)
 			let newState = [...prevState, ...res.data.articles]
 			dispatch({ type: GET_FILTERED_PRODUCTS, payload: newState })
 		})
-		.catch(err => {
-			console.log(('err: ', err))
-			dispatch({
-				type: GET_FILTERED_PRODUCTS,
-				payload: err,
-			})
-		})
+		.catch(err => dispatch({ type: GET_FILTERED_PRODUCTS, payload: err }))
 }
 
 export const addProduct = (productData, history) => dispatch => {
@@ -97,7 +69,7 @@ export const addProduct = (productData, history) => dispatch => {
 	axios
 		.post('/api/products/add', productData, { headers })
 		.then(res => dispatch({ type: ADD_PRODUCT, payload: res.data }))
-		.then(result => history.push('/user/admin/products'))
+		.then(() => history.push('/user/admin/products'))
 		.catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
 }
 

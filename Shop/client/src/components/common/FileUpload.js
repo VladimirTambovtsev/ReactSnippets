@@ -22,7 +22,6 @@ export default class FileUpload extends Component {
 
 		// @descr: Make request; add file to state; invoke function from parent component as props
 		axios.post('/api/users/uploadimage', formData, config).then(res => {
-			console.log('res.data: ', res.data)
 			this.setState(
 				{
 					uploading: false,

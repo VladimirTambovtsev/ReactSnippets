@@ -6,8 +6,6 @@ import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 
 const ProdInfo = ({ product, brand, category }) => {
 	const { description, shipping, available, price, frets } = product
-	console.log('brand: ', brand)
-	if (!brand) return <h2>No brand</h2>
 
 	return (
 		<div>

@@ -129,13 +129,13 @@ router.post('/login', async (req, res) => {
 })
 
 
+// @TODO: change route, refactor that shit
 router.post('/uploadimage', formidable(), (req, res) => {
 	// @TODO: check if user signed in
 	
 	// @TODO: check if user is admin
 
 	cloudinary.uploader.upload(req.files.file.path, result => {
-		console.log('result: ', result)
 		res.status(200).send({ 
 			public_id: result.public_id,
 			url: result.url
@@ -146,7 +146,7 @@ router.post('/uploadimage', formidable(), (req, res) => {
 	})
 })
 
-
+// @TODO: change route, refactor that shit
 router.get('/removeimage', (req, res) => {
 	// @TODO: check if user signed in
 

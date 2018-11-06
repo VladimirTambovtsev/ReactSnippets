@@ -7,7 +7,7 @@ import TopBar from '../shop/TopBar'
 
 class Product extends Component {
 	componentDidMount() {
-		// @TODO: add finding product by name on server
+		// @TODO: refactor finding product by name on server
 		// this.props.getProductById(this.props.location.state.productId)
 		this.props.getProductById('5be08339439355fb6e9a03bf')
 	}
@@ -52,17 +52,10 @@ class Product extends Component {
 	}
 }
 
-// const mapStateToProps = state => ({
-// 	product: state.product.product.data,
-// })
-
-function mapStateToProps(state) {
-	console.log('state: ', state.product)
-	return {
-		product: state.product.product,
-		loading: state.product.loading,
-	}
-}
+const mapStateToProps = state => ({
+	product: state.product.product,
+	loading: state.product.loading,
+})
 
 export default connect(
 	mapStateToProps,

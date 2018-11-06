@@ -82,7 +82,6 @@ export class Shop extends Component {
 	}
 
 	render() {
-		console.log('state: ', this.state)
 		return (
 			<div>
 				<TopBar title="Browse Products" />
@@ -152,15 +151,13 @@ export class Shop extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	return {
-		product: state.product.products,
-		filteredProducts: state.product.toShop,
-		filteredProductsSize: state.product.toShopSize,
-		brand: state.brand.brands,
-		category: state.category.categories,
-	}
-}
+const mapStateToProps = state => ({
+	product: state.product.products,
+	filteredProducts: state.product.toShop,
+	filteredProductsSize: state.product.toShopSize,
+	brand: state.brand.brands,
+	category: state.category.categories,
+})
 
 export default connect(
 	mapStateToProps,

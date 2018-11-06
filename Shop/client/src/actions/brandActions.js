@@ -16,7 +16,7 @@ export const getBrands = () => dispatch => {
 
 export const addBrand = (brandData, history) => dispatch => {
 	const token = localStorage.getItem('jwtToken')
-	console.log('token: ', token)
+
 	// eslint-disable-next-line prettier/prettier
 	const headers = {
 		'Content-Type': 'application/json',
@@ -24,15 +24,9 @@ export const addBrand = (brandData, history) => dispatch => {
 	}
 	axios
 		.post('/api/brands/add', brandData, { headers })
-		.then(res => {
-			console.log('res.data: ', res.data)
-			dispatch({ type: ADD_BRAND, payload: res.data })
-		})
+		.then(res => dispatch({ type: ADD_BRAND, payload: res.data }))
 		.then(result => history.push('/user/admin/products'))
-		.catch(err => {
-			console.log('err: ', err)
-			dispatch({ type: GET_ERRORS, payload: err.response.data })
-		})
+		.catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
 }
 
 // Set loading state

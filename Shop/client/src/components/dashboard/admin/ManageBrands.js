@@ -37,7 +37,6 @@ class ManageBrands extends Component {
 
 	render() {
 		const { errors } = this.state
-		console.log('props: ', this.props)
 		return (
 			<Dashboard>
 				<div className="admin_category_wrapper add_product_panel">
@@ -90,12 +89,9 @@ class ManageBrands extends Component {
 	}
 }
 
-const mapStateToProps = state => {
-	console.log('state: ', state)
-	return {
-		brands: state.brand.brands,
-	}
-}
+const mapStateToProps = state => ({
+	brands: state.brand.brands,
+})
 
 export default connect(
 	mapStateToProps,
