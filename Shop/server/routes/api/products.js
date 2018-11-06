@@ -131,7 +131,7 @@ router.post('/filtered', (req, res) => {
 
 // @desc: Add product to shop
 router.post('/add', passport.authenticate('jwt', { session: false }), async (req, res) => {
-	// Check role
+	// Check role admin
 	const user = await User.findOne({ _id: req.user._id })
 	if (user.role !== 1) {
 		return res.status(403).json({ errors: 'No Access Rights' })

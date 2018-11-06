@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addToCart } from '../../actions/cartActions'
 
@@ -10,7 +10,6 @@ class Card extends Component {
 			this.props.addToCart(this.props._id)
 			console.log('auth')
 		} else {
-			console.log('not auth')
 			this.props.history.push('/signin')
 		}
 	}
@@ -25,6 +24,7 @@ class Card extends Component {
 			description,
 			auth,
 		} = this.props
+		console.log('props: ', this.props)
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div
@@ -81,4 +81,4 @@ const mapStateToProps = state => ({
 	auth: state.auth,
 })
 
-export default connect(mapStateToProps)(Card)
+export default withRouter(connect(mapStateToProps)(Card))

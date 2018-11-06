@@ -1,4 +1,5 @@
 import express from 'express'
+import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
@@ -158,6 +159,42 @@ router.get('/removeimage', (req, res) => {
 		if (error) return res.json({ succes: false, error })
 		res.status(200).send('ok')
 	})
+})
+
+
+router.post('/cart', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const user = await User.findOne({ _id: req.user._id })
+	if (!user) {
+		return res.status(403).json({ error: 'You must sign in to add products to cart' })
+	}
+
+	let alreadyInCart
+	user.cart.forEach(item => {
+		if (item.id == req.query.productId) {
+			alreadyInCart = true
+		}
+	})
+
+	if (alreadyInCart) {
+		console.log('already in cart')
+	} else {
+		// @TODO: Replace to await
+		User.findOneAndUpdate(
+			{ _id: user.id }, {
+				$push: {
+					cart: { 
+						id: mongoose.Types.ObjectId(req.query.productId), 
+						quantity: 1, 
+						date: Date.now() 
+					} 
+				}
+			}, { new: true },
+			(err, doc) => {
+				if (err) return res.json({ success: false, err })
+				res.status(200).json(doc.cart)
+			}
+		)
+	}
 })
 
 export default router
