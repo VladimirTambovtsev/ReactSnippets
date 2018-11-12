@@ -20,6 +20,8 @@ import Login from './components/auth/Login'
 import Shop from './components/shop/Shop'
 import Product from './components/product/Product'
 
+import Cart from './components/cart/Cart'
+
 import UserInformation from './components/dashboard/UserInformation'
 import AddProduct from './components/dashboard/admin/AddProduct'
 import DeleteProduct from './components/dashboard/admin/DeleteProduct'
@@ -73,6 +75,9 @@ class App extends Component {
 							<Route exact path="/profile/:handle" component={Profile} />
 							{/* <Route path="*" component={NotFound} status={404} /> */}
 
+							<Switch>
+								<PrivateRoute exact path="/user/cart" component={Cart} />
+							</Switch>
 							<Switch>
 								<PrivateRoute
 									exact
