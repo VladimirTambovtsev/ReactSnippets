@@ -37,7 +37,7 @@ class Card extends Component {
 				<div className="action_container">
 					<div className="tags">
 						{/* <Link to={`/product/${productName.replace(/\s/g, '-')}`}> */}
-						<Link
+						{/* <Link
 							to={{
 								pathname: `/product/${productName.replace(/\s/g, '-')}`,
 								search: '',
@@ -45,6 +45,9 @@ class Card extends Component {
 							}}
 						>
 							<div className="name">{productName}</div>
+						</Link> */}
+						<Link to={`/product/${_id}`}>
+							{<div className="name">{productName}</div>}
 						</Link>
 						<div className="price">${price}</div>
 					</div>

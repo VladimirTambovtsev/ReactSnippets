@@ -32,9 +32,9 @@ class Dashboard extends Component {
 							<Link to="/user/dashboard">User Information</Link>
 							<Link to="/user/cart">
 								<div className="cart_link">
-									My Cart -{' '}
+									My Cart
 									<span>
-										{this.state.totalCart ? this.state.totalCart : null}
+										{this.state.totalCart ? ` - ${this.state.totalCart}` : null}
 									</span>
 								</div>
 							</Link>

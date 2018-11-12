@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getProductById } from '../../actions/productsActions'
+import { addToCart } from '../../actions/cartActions'
 import ProdInfo from './ProdInfo'
 import ProdImages from './ProdImages'
 import TopBar from '../shop/TopBar'
@@ -8,9 +9,10 @@ import TopBar from '../shop/TopBar'
 class Product extends Component {
 	componentDidMount() {
 		// @TODO: Refactor finding product by name on server
-		// const id = this.props.match.params.id 	// get /:id from route
 		// this.props.getProductById(this.props.location.state.productId)	// get from <Link/> state
-		this.props.getProductById('5be08339439355fb6e9a03bf')
+		// this.props.getProductById('5be08339439355fb6e9a03bf')	// static id
+		const id = this.props.match.params.id // get /:id from route
+		this.props.getProductById(id)
 	}
 
 	componentWillUnmount() {
@@ -18,7 +20,9 @@ class Product extends Component {
 		// this.props.clearProductById()
 	}
 
-	// addToCartHandler = id => {}
+	addToCartHandler = id => {
+		this.props.addToCart(id)
+	}
 
 	render() {
 		const { product, loading } = this.props
@@ -65,5 +69,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ getProductById }
+	{ getProductById, addToCart }
 )(Product)

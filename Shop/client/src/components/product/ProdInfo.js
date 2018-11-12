@@ -4,8 +4,8 @@ import faTruck from '@fortawesome/fontawesome-free-solid/faTruck'
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
 
-const ProdInfo = ({ product, brand, category }) => {
-	const { description, shipping, available, price, frets } = product
+const ProdInfo = ({ product, brand, category, addToCart }) => {
+	const { _id, description, shipping, available, price, frets } = product
 
 	return (
 		<div>
@@ -27,8 +27,8 @@ const ProdInfo = ({ product, brand, category }) => {
 						<FontAwesomeIcon icon={faCheck} />
 
 						<div className="tag_text">
-							<div>Available in store</div>
-							<div>And return</div>
+							<div>Available</div>
+							<div> in store</div>
 						</div>
 					</div>
 				) : (
@@ -45,7 +45,9 @@ const ProdInfo = ({ product, brand, category }) => {
 			<div className="product_actions">
 				<div className="price">${price}</div>
 				<div className="cart">
-					<button className="add_to_cart_link">Add</button>
+					<button onClick={() => addToCart(_id)} className="add_to_cart_link">
+						Add
+					</button>
 				</div>
 			</div>
 			<div className="product_specifications">
