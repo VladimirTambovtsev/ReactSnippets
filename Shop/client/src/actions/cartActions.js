@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { ADD_TO_CART, CART_LOADING, GET_ERRORS } from './types'
 
+// export const getFromCart = () => dispatch => {
+// 	axios.get('/api/users/cart')
+// }
+
 export const addToCart = _id => dispatch => {
 	const token = localStorage.getItem('jwtToken')
 	const headers = {

@@ -162,6 +162,15 @@ router.get('/removeimage', (req, res) => {
 })
 
 
+router.get('/cart', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const user = await User.findOne({ _id: req.user._id })
+	if (!user) {
+		return res.status(403).json({ error: 'You must sign in to add products to cart' })
+	} 
+		return res.status(200).json({ cart: user.cart })	
+})
+
+
 router.post('/cart/:productId', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const user = await User.findOne({ _id: req.user._id })
 	if (!user) {

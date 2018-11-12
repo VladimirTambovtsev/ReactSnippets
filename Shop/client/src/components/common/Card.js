@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../actions/cartActions'
 
 class Card extends Component {
+	// componendDidMount() {}
+
 	handleButton = () => {
 		if (this.props.auth.isAuthenticated === true) {
 			this.props.addToCart(this.props._id)
