@@ -10,10 +10,9 @@ export const getFromCart = () => dispatch => {
 	axios
 		.get('/api/users/cart')
 		.then(res => {
-			console.log('res.data: ', res.data)
 			dispatch({ type: GET_ALL_FROM_CART, payload: res.data })
 		})
-		.catch(err => dispatch({ type: GET_ALL_FROM_CART, payload: null }))
+		.catch(err => dispatch({ type: GET_ALL_FROM_CART, payload: 'Error' }))
 }
 
 export const addToCart = _id => dispatch => {

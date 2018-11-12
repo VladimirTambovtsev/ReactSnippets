@@ -2,8 +2,23 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { getFromCart } from '../../actions/cartActions'
 
 class Dashboard extends Component {
+	state = {
+		totalCart: 0,
+	}
+
+	componentDidMount() {
+		this.props.getFromCart()
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.cart.cart) {
+			this.setState({ totalCart: nextProps.cart.cart.length })
+		}
+	}
+
 	render() {
 		const { user } = this.props.auth
 
@@ -17,7 +32,10 @@ class Dashboard extends Component {
 							<Link to="/user/dashboard">User Information</Link>
 							<Link to="/user/cart">
 								<div className="cart_link">
-									My Cart - <span>{user.cart ? user.cart.length : 0} </span>
+									My Cart -{' '}
+									<span>
+										{this.state.totalCart ? this.state.totalCart : null}
+									</span>
 								</div>
 							</Link>
 						</div>
@@ -56,6 +74,11 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
 	auth: state.auth,
+	cart: state.cart.cart,
+	cartLoading: state.cart.loading,
 })
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(
+	mapStateToProps,
+	{ getFromCart }
+)(Dashboard)

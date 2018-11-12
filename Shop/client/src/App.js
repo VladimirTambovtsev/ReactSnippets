@@ -29,7 +29,7 @@ import ManageCategories from './components/dashboard/admin/ManageCategories'
 
 import Profiles from './components/profiles/Profiles'
 import Profile from './components/profile/Profile'
-import NotFound from './components/not-found/NotFound'
+// import NotFound from './components/not-found/NotFound'
 
 import './App.css'
 

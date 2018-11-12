@@ -8,6 +8,7 @@ export default class ImageLightbox extends Component {
 	}
 
 	componentDidMount() {
+		// @TODO: replace map to forEach
 		let imgArray = []
 		this.props.images.map(img => {
 			imgArray.push({ src: img })

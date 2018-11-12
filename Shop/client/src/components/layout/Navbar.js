@@ -24,16 +24,11 @@ class Navbar extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.cart.cart) {
 			this.setState({ totalCart: nextProps.cart.cart.length })
-			console.log('value: ', nextProps.cart.cart.length)
-			console.log('nextProps: ', nextProps)
-			console.log('this.state: ', this.state)
 		}
 	}
 
 	render() {
-		const { isAuthenticated, user } = this.props.auth
-		console.log('navbar props: ', this.props)
-		console.log('cartLoading: ', this.props.cartLoading)
+		const { isAuthenticated } = this.props.auth
 		const authLinks = (
 			<div>
 				<div className="top">
@@ -92,7 +87,6 @@ Navbar.propTypes = {
 }
 
 const mapStateToProps = state => {
-	console.log('navbar state:', state)
 	return {
 		auth: state.auth,
 		cart: state.cart.cart,

@@ -21,7 +21,6 @@ class Card extends Component {
 			price,
 			button,
 			description,
-			auth,
 		} = this.props
 		return (
 			<div className={`card_item_wrapper ${grid}`}>

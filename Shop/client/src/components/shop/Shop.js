@@ -3,7 +3,6 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faBars from '@fortawesome/fontawesome-free-solid/faBars'
 import faTh from '@fortawesome/fontawesome-free-solid/faTh'
 import TopBar from './TopBar'
-import Card from '../common/Card'
 import BrandSidebar from './BrandSidebar'
 import CategorySidebar from './CategorySidebar'
 import PriceSidebar from './PriceSidebar'
@@ -123,19 +122,6 @@ export class Shop extends Component {
 									</div>
 								</div>
 							</div>
-							{/* {this.props.product.map(
-								({ _id, productName, brand, price, images }) => (
-									<Card
-										_id={_id}
-										key={_id}
-										images={images}
-										brand={brand}
-										productName={productName}
-										price={price}
-										button={true}
-									/>
-								)
-							)} */}
 							<Loadmore
 								grid={this.state.grid}
 								limit={this.state.skip}
