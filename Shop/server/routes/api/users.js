@@ -187,7 +187,6 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 	if (alreadyInCart) {
 		console.log('already in cart')
 	} else {
-		console.log('add to cart')
 		// @TODO: Replace to await
 
 		User.findOneAndUpdate(

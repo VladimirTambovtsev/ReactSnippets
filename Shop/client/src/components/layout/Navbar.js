@@ -22,6 +22,7 @@ class Navbar extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log('nextProps: ', nextProps)
 		if (nextProps.cart.cart) {
 			this.setState({ totalCart: nextProps.cart.cart.length })
 		}
@@ -34,7 +35,9 @@ class Navbar extends Component {
 				<div className="top">
 					<div className="cart_link">
 						<Link to="/user/cart">
-							<span>{this.state.totalCart ? this.state.totalCart : null}</span>
+							{this.state.totalCart ? (
+								<span>{this.state.totalCart}</span>
+							) : null}
 							My Cart
 						</Link>
 					</div>

@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
 		case GET_ALL_FROM_CART:
 			return { ...state, loading: false, cart: action.payload }
 		case ADD_TO_CART:
-			return { ...state, cart: action.payload, loading: false }
+			return { ...state, cart: { cart: action.payload, loading: false } }
 		default:
 			return state
 	}
