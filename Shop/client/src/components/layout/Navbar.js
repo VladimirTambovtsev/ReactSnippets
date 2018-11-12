@@ -22,7 +22,6 @@ class Navbar extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('nextProps: ', nextProps)
 		if (nextProps.cart.cart) {
 			this.setState({ totalCart: nextProps.cart.cart.length })
 		}

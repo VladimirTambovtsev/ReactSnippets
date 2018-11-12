@@ -29,7 +29,7 @@ export const addToCart = _id => dispatch => {
 		.then(res => {
 			dispatch({ type: ADD_TO_CART, payload: res.data })
 		})
-		.catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }))
+		.catch(err => dispatch({ type: GET_ERRORS, payload: `Error ${err}` }))
 }
 
 // Set loading state

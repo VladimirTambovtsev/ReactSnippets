@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
@@ -172,23 +173,32 @@ router.get('/cart', passport.authenticate('jwt', { session: false }), async (req
 
 // @TODO: Refactor that
 router.post('/cart/:productId', passport.authenticate('jwt', { session: false }), async (req, res) => {
-	const user = await User.findOne({ _id: req.user._id })
+	const user = await User.findOne({ _id: req.user.id })
 	if (!user) {
 		return res.status(403).json({ error: 'You must sign in to add products to cart' })
 	}
 
-	let alreadyInCart
+	let alreadyInCart = false
 	user.cart.forEach(item => {
+		// eslint-disable-next-line eqeqeq
 		if (item.id == req.params.productId) {
 			alreadyInCart = true
 		}
 	})
+	
 
+	// @TODO: Replace to await
 	if (alreadyInCart) {
-		console.log('already in cart')
+		User.findOneAndUpdate(
+			{
+				_id: user.id,
+				'cart.id': mongoose.Types.ObjectId(req.params.productId)
+			},
+			{ $inc: { 'cart.$.quantity': 1 } },
+			{ new: true },
+			() => res.status(200).json(user.cart)
+		)
 	} else {
-		// @TODO: Replace to await
-
 		User.findOneAndUpdate(
 			{ _id: user.id }, {
 				$push: {
@@ -202,7 +212,6 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 			(err, doc) => {
 				if (err) return res.json({ success: false, err })
 				res.status(200).json(doc.cart)
-				console.log('doc.cart', doc.cart)
 			}
 		)
 	}
