@@ -5,12 +5,9 @@ import { connect } from 'react-redux'
 import { addToCart } from '../../actions/cartActions'
 
 class Card extends Component {
-	// componendDidMount() {}
-
 	handleButton = () => {
 		if (this.props.auth.isAuthenticated === true) {
 			this.props.addToCart(this.props._id)
-			console.log('auth')
 		} else {
 			this.props.history.push('/signin')
 		}
@@ -26,7 +23,6 @@ class Card extends Component {
 			description,
 			auth,
 		} = this.props
-		console.log('props: ', this.props)
 		return (
 			<div className={`card_item_wrapper ${grid}`}>
 				<div
@@ -80,10 +76,9 @@ Card.propTypes = {
 }
 
 const mapStateToProps = state => {
-	console.log('state: ', state)
 	return {
 		auth: state.auth,
-		cart: state.cart.cartProducts,
+		cart: state.cart.cart,
 	}
 }
 

@@ -170,7 +170,7 @@ router.get('/cart', passport.authenticate('jwt', { session: false }), async (req
 		return res.status(200).json({ cart: user.cart })	
 })
 
-
+// @TODO: Refactor that
 router.post('/cart/:productId', passport.authenticate('jwt', { session: false }), async (req, res) => {
 	const user = await User.findOne({ _id: req.user._id })
 	if (!user) {

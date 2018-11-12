@@ -4,25 +4,42 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/authActions'
 import { clearCurrentProfile } from '../../actions/profileActions'
-import { addToCart } from '../../actions/cartActions'
+import { addToCart, getFromCart } from '../../actions/cartActions'
 
 class Navbar extends Component {
+	state = {
+		totalCart: 0,
+	}
+
+	componentDidMount() {
+		this.props.getFromCart()
+	}
+
 	onLogoutClick(e) {
 		e.preventDefault()
 		this.props.clearCurrentProfile()
 		this.props.logoutUser()
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.cart.cart) {
+			this.setState({ totalCart: nextProps.cart.cart.length })
+			console.log('value: ', nextProps.cart.cart.length)
+			console.log('nextProps: ', nextProps)
+			console.log('this.state: ', this.state)
+		}
+	}
+
 	render() {
 		const { isAuthenticated, user } = this.props.auth
 		console.log('navbar props: ', this.props)
+		console.log('cartLoading: ', this.props.cartLoading)
 		const authLinks = (
 			<div>
 				<div className="top">
 					<div className="cart_link">
 						<Link to="/user/cart">
-							{/* <span>{user.cart ? user.cart.length : 0}</span> */}
-							<span>{this.props.cart.length}</span>
+							<span>{this.state.totalCart ? this.state.totalCart : null}</span>
 							My Cart
 						</Link>
 					</div>
@@ -78,11 +95,12 @@ const mapStateToProps = state => {
 	console.log('navbar state:', state)
 	return {
 		auth: state.auth,
-		cart: state.cart.products,
+		cart: state.cart.cart,
+		cartLoading: state.cart.loading,
 	}
 }
 
 export default connect(
 	mapStateToProps,
-	{ logoutUser, clearCurrentProfile, addToCart }
+	{ logoutUser, clearCurrentProfile, addToCart, getFromCart }
 )(Navbar)
