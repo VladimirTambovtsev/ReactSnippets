@@ -179,7 +179,9 @@ router.get('/cart/full', passport.authenticate('jwt', { session: false }), async
 	}
 
 	const items = user.cart.map(product => mongoose.Types.ObjectId(product.id))
+	console.log('items: ', items)
 
+	
 	const products = await Product
 		.find({ _id: { $in: items } })
 		.populate('brand')

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Block = ({ product, removeItem, cart }) => {
-	console.log('Block props: ', product)
 	return (
 		<div className="user_product_block">
 			<div className="item">
@@ -22,12 +21,14 @@ const Block = ({ product, removeItem, cart }) => {
 			</div>
 			<div className="item">
 				<h4>Quantity</h4>
-				{/* {cart.map(
-					(productInfo, index) =>
-						productInfo === product._id ? (
-							<div key={index}>{productInfo.quantity}</div>
-						) : null
-				)} */}
+				{cart
+					? cart.map(
+							(productInfo, index) =>
+								productInfo.id === product._id ? (
+									<div key={index}>{productInfo.quantity}</div>
+								) : null
+					  )
+					: null}
 			</div>
 		</div>
 	)

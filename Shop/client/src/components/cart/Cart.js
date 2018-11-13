@@ -23,17 +23,18 @@ class Cart extends Component {
 	removeFromCart = id => {}
 
 	render() {
-		const { cartProducts } = this.props
+		const { cartProducts, cartLoading } = this.props
 		return (
 			<Dashboard>
 				<h1>My Cart</h1>
 				<div className="user_cart">
-					{cartProducts
+					{cartProducts && cartLoading === false
 						? cartProducts.map(product => (
 								<Block
 									key={product._id}
 									product={product}
 									removeItem={id => this.removeFromCart(id)}
+									cart={this.props.cart.cart}
 								/>
 						  ))
 						: null}
