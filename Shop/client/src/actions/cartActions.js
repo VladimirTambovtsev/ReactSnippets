@@ -2,6 +2,7 @@ import axios from 'axios'
 import {
 	ADD_TO_CART,
 	GET_ALL_FROM_CART,
+	GET_ALL_PRODUCTS_FROM_CART,
 	CART_LOADING,
 	GET_ERRORS,
 } from './types'
@@ -12,7 +13,21 @@ export const getFromCart = () => dispatch => {
 		.then(res => {
 			dispatch({ type: GET_ALL_FROM_CART, payload: res.data })
 		})
-		.catch(err => dispatch({ type: GET_ALL_FROM_CART, payload: 'Error' }))
+		.catch(err =>
+			dispatch({ type: GET_ALL_FROM_CART, payload: `Error: ${err}` })
+		)
+}
+
+export const getAllProductsFromCart = () => dispatch => {
+	axios
+		.get('/api/users/cart/all')
+		.then(res => {
+			console.log(('res.data: ', res.data))
+			dispatch({ type: GET_ALL_PRODUCTS_FROM_CART, payload: res.data })
+		})
+		.catch(err =>
+			dispatch({ type: GET_ALL_PRODUCTS_FROM_CART, payload: `Error: ${err}` })
+		)
 }
 
 export const addToCart = _id => dispatch => {

@@ -9,6 +9,7 @@ import cloudinary from 'cloudinary'
 import formidable from 'express-formidable'
 
 import User from '../../models/User'	// Load Models
+import Product from '../../models/Product'	// Load Models
 import validateRegisterInput from '../../validation/register'
 import validateLoginInput from '../../validation/login'
 
@@ -168,7 +169,23 @@ router.get('/cart', passport.authenticate('jwt', { session: false }), async (req
 	if (!user) {
 		return res.status(403).json({ error: 'You must sign in to add products to cart' })
 	} 
-		return res.status(200).json({ cart: user.cart })	
+	return res.status(200).json({ cart: user.cart })	
+})
+
+router.get('/cart/full', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const user = await User.findOne({ _id: req.user.id })
+	if (!user) {
+		return res.status(403).json({ error: 'You must sign in to add products to cart' })
+	}
+
+	const items = user.cart.map(product => mongoose.Types.ObjectId(product.id))
+
+	const products = await Product
+		.find({ _id: { $in: items } })
+		.populate('brand')
+		.populate('categories')
+
+	res.status(200).json(products)
 })
 
 // @TODO: Refactor that
