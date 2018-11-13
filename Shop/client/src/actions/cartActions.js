@@ -18,15 +18,21 @@ export const getFromCart = () => dispatch => {
 		)
 }
 
-export const getAllProductsFromCart = () => dispatch => {
+export const getFullFromCart = () => dispatch => {
 	axios
-		.get('/api/users/cart/all')
+		.get('/api/users/cart/full')
 		.then(res => {
 			console.log(('res.data: ', res.data))
-			dispatch({ type: GET_ALL_PRODUCTS_FROM_CART, payload: res.data })
+			dispatch({
+				type: GET_ALL_PRODUCTS_FROM_CART,
+				payload: res.data,
+			})
 		})
 		.catch(err =>
-			dispatch({ type: GET_ALL_PRODUCTS_FROM_CART, payload: `Error: ${err}` })
+			dispatch({
+				type: GET_ALL_PRODUCTS_FROM_CART,
+				payload: `Error: ${err}`,
+			})
 		)
 }
 
