@@ -46,6 +46,7 @@ class Cart extends Component {
 const mapStateToProps = state => ({
 	cartProducts: state.cart.fullCart,
 	cartLoading: state.cart.loading,
+	cart: state.cart.cart,
 })
 
 export default connect(
