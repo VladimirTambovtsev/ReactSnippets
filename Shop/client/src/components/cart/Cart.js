@@ -21,9 +21,24 @@ class Cart extends Component {
 
 	removeFromCart = id => {}
 
+	checkLoading = (cartLoading, finalProducts) => {
+		if (cartLoading === true) {
+			return <h1>Loading...</h1>
+		}
+
+		// @TODO: remove this render when it's loading
+		if (finalProducts.length === 0 && cartLoading === false && finalProducts) {
+			return (
+				<div className="cart_no_items">
+					<FontAwesomeIcon icon={faFrown} />
+					<div>You have no items</div>
+				</div>
+			)
+		}
+	}
+
 	render() {
 		const { cartProducts, cartLoading } = this.props
-		const productsQuantity = this.props.cart.cart
 
 		// @descr: copy `quantity` from state to cartProducts array
 		let finalProducts = []
@@ -33,20 +48,20 @@ class Cart extends Component {
 				this.props.cart.cart.forEach(arr2 => {
 					if (arr1._id === arr2.id) {
 						arr1.quantity = arr2.quantity
-						totalCount += parseInt(arr1.price) * parseInt(arr1.quantity)
-						console.log(totalCount)
+						totalCount += parseInt(arr1.price, 10) * parseInt(arr1.quantity, 10)
 						finalProducts.push(arr1)
 					}
 				})
 			)
 		}
-		console.log('totalCount: ', totalCount)
 
 		return (
 			<Dashboard>
 				<h1>My Cart</h1>
 				<div className="user_cart">
-					{finalProducts && cartLoading === false
+					{this.checkLoading(cartLoading, finalProducts)}
+
+					{finalProducts
 						? finalProducts.map(product => (
 								<Block
 									key={product._id}
@@ -56,7 +71,12 @@ class Cart extends Component {
 						  ))
 						: null}
 
-					<div className="user_cart_sum">Total amount: $ {totalCount}</div>
+					{finalProducts && totalCount !== 0 ? (
+						<div className="user_cart_sum">
+							Total amount: $ {totalCount}
+							<div className="paypal_button_container">Paypal</div>
+						</div>
+					) : null}
 				</div>
 			</Dashboard>
 		)

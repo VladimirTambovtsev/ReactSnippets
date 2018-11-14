@@ -221,16 +221,6 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 			}
 		)
 	} else {
-		// const updatedProduct = await Product.findOneAndUpdate(
-		// 	{ _id: req.params.productId },
-		// 	{ 
-		// 		$push: {
-		// 			quantity: 1
-		// 		}
-		// 	},
-		// 	{ new: true }
-		// )
-		// console.log('updatedProduct: ', updatedProduct)
 		User.findOneAndUpdate(
 			{ _id: user.id }, {
 				$push: {
@@ -248,6 +238,23 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 			}
 		)
 	}
+})
+
+router.delete('/cart/:productId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const user = await User.findOne({ _id: req.user.id })
+	if (!user) {
+		return res.status(403).json({ error: 'You must sign in to add products to cart' })
+	}
+
+	const updatedUser = await User.findOneAndUpdate({ _id: user.id }, { $pull: { cart: { id: mongoose.Types.ObjectId(req.params.productId) } } }, { new: true })
+	console.log(updatedUser)
+	const updatedCart = updatedUser.cart.map(item => mongoose.Types.ObjectId(item.id))
+
+	const cartDetails = await Product
+		.find({ _id: { $in: updatedCart } })
+		.populate('brand')
+		.populate('categories')
+	return res.status(200).json(cartDetails)
 })
 
 export default router
