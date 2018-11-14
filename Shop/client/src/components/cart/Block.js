@@ -21,14 +21,7 @@ const Block = ({ product, removeItem, cart }) => {
 			</div>
 			<div className="item">
 				<h4>Quantity</h4>
-				{cart
-					? cart.map(
-							(productInfo, index) =>
-								productInfo.id === product._id ? (
-									<div key={index}>{productInfo.quantity}</div>
-								) : null
-					  )
-					: null}
+				{product.quantity}
 			</div>
 			<div className="item">
 				<h3>Price</h3>$ {product.price}
