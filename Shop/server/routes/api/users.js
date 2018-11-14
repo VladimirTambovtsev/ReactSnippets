@@ -165,7 +165,7 @@ router.get('/removeimage', (req, res) => {
 
 
 router.get('/cart', passport.authenticate('jwt', { session: false }), async (req, res) => {
-	const user = await User.findOne({ _id: req.user._id })
+	const user = await User.findOne({ _id: req.user.id })
 	if (!user) {
 		return res.status(403).json({ error: 'You must sign in to add products to cart' })
 	} 
@@ -179,13 +179,13 @@ router.get('/cart/full', passport.authenticate('jwt', { session: false }), async
 	}
 
 	const items = user.cart.map(product => mongoose.Types.ObjectId(product.id))
-	console.log('items: ', items)
 
 	
 	const products = await Product
 		.find({ _id: { $in: items } })
 		.populate('brand')
 		.populate('categories')
+
 
 	res.status(200).json(products)
 })
@@ -207,7 +207,7 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 	
 
 	// @TODO: Replace to await
-	if (alreadyInCart) {
+	if (alreadyInCart) {	
 		User.findOneAndUpdate(
 			{
 				_id: user.id,
@@ -215,22 +215,36 @@ router.post('/cart/:productId', passport.authenticate('jwt', { session: false })
 			},
 			{ $inc: { 'cart.$.quantity': 1 } },
 			{ new: true },
-			() => res.status(200).json(user.cart)
+			() => {
+				res.status(200).json(user.cart)
+				console.log('user.cart: ', user.cart)
+			}
 		)
 	} else {
+		// const updatedProduct = await Product.findOneAndUpdate(
+		// 	{ _id: req.params.productId },
+		// 	{ 
+		// 		$push: {
+		// 			quantity: 1
+		// 		}
+		// 	},
+		// 	{ new: true }
+		// )
+		// console.log('updatedProduct: ', updatedProduct)
 		User.findOneAndUpdate(
 			{ _id: user.id }, {
 				$push: {
-					cart: { 
+					cart: {
 						id: mongoose.Types.ObjectId(req.params.productId), 
 						quantity: 1, 
 						date: Date.now() 
-					} 
+					}
 				}
 			}, { new: true },
 			(err, doc) => {
 				if (err) return res.json({ success: false, err })
 				res.status(200).json(doc.cart)
+				console.log('doc.cart: ', doc.cart)
 			}
 		)
 	}

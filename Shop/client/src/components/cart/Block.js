@@ -30,6 +30,17 @@ const Block = ({ product, removeItem, cart }) => {
 					  )
 					: null}
 			</div>
+			<div className="item">
+				<h3>Price</h3>$ {product.price}
+			</div>
+			<div className="item btn">
+				<div
+					className="cart_remove_btn"
+					onClick={() => removeItem(product._id)}
+				>
+					Remove
+				</div>
+			</div>
 		</div>
 	)
 }

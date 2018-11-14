@@ -13,7 +13,6 @@ class Cart extends Component {
 		loading: true,
 		total: 0,
 		success: false,
-		showTotal: false,
 	}
 
 	componentDidMount() {
@@ -24,6 +23,19 @@ class Cart extends Component {
 
 	render() {
 		const { cartProducts, cartLoading } = this.props
+		const productsQuantity = this.props.cart.cart
+		let finalProducts = []
+		if (cartProducts && cartLoading === false) {
+			cartProducts.forEach(arr1 =>
+				this.props.cart.cart.forEach(arr2 => {
+					if (arr1._id == arr2.id) {
+						arr1.quantity = arr2.quantity
+						finalProducts.push(arr1)
+					}
+				})
+			)
+		}
+		console.log('finalArray: ', finalProducts)
 		return (
 			<Dashboard>
 				<h1>My Cart</h1>
@@ -34,10 +46,21 @@ class Cart extends Component {
 									key={product._id}
 									product={product}
 									removeItem={id => this.removeFromCart(id)}
-									cart={this.props.cart.cart}
+									cart={productsQuantity}
 								/>
 						  ))
 						: null}
+
+					<div className="user_cart_sum">
+						Total amount: $
+						{cartProducts && cartLoading === false && productsQuantity
+							? productsQuantity.map(({ quantity, id }) =>
+									cartProducts
+										.map(({ price }) => price)
+										.reduce((first, second) => first + second)
+							  )
+							: null}
+					</div>
 				</div>
 			</Dashboard>
 		)
