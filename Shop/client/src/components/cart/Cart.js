@@ -4,7 +4,7 @@ import faFrown from '@fortawesome/fontawesome-free-solid/faFrown'
 import faSmile from '@fortawesome/fontawesome-free-solid/faSmile'
 
 import { connect } from 'react-redux'
-import { getFullFromCart } from '../../actions/cartActions'
+import { getFullFromCart, removeFromCart } from '../../actions/cartActions'
 import Dashboard from '../dashboard/Dashboard'
 import Block from './Block'
 
@@ -19,7 +19,10 @@ class Cart extends Component {
 		this.props.getFullFromCart()
 	}
 
-	removeFromCart = id => {}
+	removeFromCart = id => {
+		this.props.removeFromCart(id)
+		this.props.getFullFromCart()
+	}
 
 	checkLoading = (cartLoading, finalProducts) => {
 		if (cartLoading === true) {
@@ -43,7 +46,7 @@ class Cart extends Component {
 		// @descr: copy `quantity` from state to cartProducts array
 		let finalProducts = []
 		let totalCount = 0
-		if (cartProducts && cartLoading === false) {
+		if (cartProducts && cartProducts !== undefined && cartLoading === false) {
 			cartProducts.forEach(arr1 =>
 				this.props.cart.cart.forEach(arr2 => {
 					if (arr1._id === arr2.id) {
@@ -83,13 +86,16 @@ class Cart extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	cartProducts: state.cart.fullCart,
-	cartLoading: state.cart.loading,
-	cart: state.cart.cart,
-})
+const mapStateToProps = state => {
+	console.log('state:', state)
+	return {
+		cartProducts: state.cart.fullCart,
+		cartLoading: state.cart.loading,
+		cart: state.cart.cart,
+	}
+}
 
 export default connect(
 	mapStateToProps,
-	{ getFullFromCart }
+	{ getFullFromCart, removeFromCart }
 )(Cart)

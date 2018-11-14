@@ -246,15 +246,9 @@ router.delete('/cart/:productId', passport.authenticate('jwt', { session: false 
 		return res.status(403).json({ error: 'You must sign in to add products to cart' })
 	}
 
-	const updatedUser = await User.findOneAndUpdate({ _id: user.id }, { $pull: { cart: { id: mongoose.Types.ObjectId(req.params.productId) } } }, { new: true })
-	console.log(updatedUser)
-	const updatedCart = updatedUser.cart.map(item => mongoose.Types.ObjectId(item.id))
+	await User.findOneAndUpdate({ _id: user.id }, { $pull: { cart: { id: mongoose.Types.ObjectId(req.params.productId) } } }, { new: true })
 
-	const cartDetails = await Product
-		.find({ _id: { $in: updatedCart } })
-		.populate('brand')
-		.populate('categories')
-	return res.status(200).json(cartDetails)
+	return res.status(200).json(req.params.productId)
 })
 
 export default router
