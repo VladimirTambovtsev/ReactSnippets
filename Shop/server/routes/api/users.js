@@ -28,12 +28,13 @@ cloudinary.config({
 })
 
 // nodemailer
-const smtpTransport = mailer.createTransport({
-  service: process.env.EMAIL_SERVICE,
+const transporter = mailer.createTransport({
+	service: process.env.EMAIL_SERVICE,
 	auth: {
 		user: process.env.EMAIL,
 		pass: process.env.PASSWORD
 	}
+	// host; port; secure (ssl)
 })
 
 
@@ -119,12 +120,12 @@ router.post('/register', async (req, res) => {
 	})
 
 	// @TODO: send Email confirmation: see emailConfirmed at User.js
-	smtpTransport.use('compile', hbs({
+	transporter.use('compile', hbs({
       viewPath: 'server/config/mails',
       extName: '.hbs'
     }))
 
-	const mailMessage = {
+	const mailOptions = {
 		from: `eCommerce - <${process.env.EMAIL}>`,
 		to: req.body.email,
 		subject: `Welcome to eCommerce, ${req.body.email}`,
@@ -133,9 +134,9 @@ router.post('/register', async (req, res) => {
 			email: req.body.email
 		}
 	}
-	smtpTransport.sendMail(mailMessage, (err, res) => {
+	transporter.sendMail(mailOptions, (err, res) => {
 		if (err) console.log(err)
-		smtpTransport.close()
+		transporter.close()
 	})
 })
 

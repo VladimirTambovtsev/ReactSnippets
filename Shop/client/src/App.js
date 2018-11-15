@@ -32,7 +32,7 @@ import ManageCategories from './components/dashboard/admin/ManageCategories'
 
 import Profiles from './components/profiles/Profiles'
 import Profile from './components/profile/Profile'
-// import NotFound from './components/not-found/NotFound'
+import NotFound from './components/not-found/NotFound'
 
 import './App.css'
 
@@ -66,63 +66,50 @@ class App extends Component {
 				<Router>
 					<div>
 						<Navbar />
-						<Route exact path="/" component={Landing} />
 						<div className="page_container">
-							<Route exact path="/signup" component={Register} />
-							<Route exact path="/signin" component={Login} />
-							<Route exact path="/shop" component={Shop} />
-							<Route exact path="/product/:id" component={Product} />
-							<Route exact path="/profiles" component={Profiles} />
-							<Route exact path="/profile/:handle" component={Profile} />
-							{/* <Route path="*" component={NotFound} status={404} /> */}
+							<Switch>
+								<Route exact path="/" component={Landing} />
+								<Route exact path="/signup" component={Register} />
+								<Route exact path="/signin" component={Login} />
+								<Route exact path="/shop" component={Shop} />
+								<Route exact path="/product/:id" component={Product} />
+								<Route exact path="/profiles" component={Profiles} />
+								<Route exact path="/profile/:handle" component={Profile} />
 
-							<Switch>
 								<PrivateRoute exact path="/user/cart" component={Cart} />
-							</Switch>
-							<Switch>
+
 								<PrivateRoute
 									exact
 									path="/user/dashboard"
 									component={UserInformation}
 								/>
-							</Switch>
-							<Switch>
 								<PrivateRoute exact path="/user/edit" component={UserEdit} />
-							</Switch>
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/user/admin/products"
 									component={AllProducts}
 								/>
-							</Switch>
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/user/admin/products/add"
 									component={AddProduct}
 								/>
-							</Switch>
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/user/admin/products/delete"
 									component={DeleteProduct}
 								/>
-							</Switch>
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/user/admin/brands"
 									component={ManageBrands}
 								/>
-							</Switch>
-							<Switch>
 								<PrivateRoute
 									exact
 									path="/user/admin/categories"
 									component={ManageCategories}
 								/>
+								<Route component={NotFound} />
 							</Switch>
 						</div>
 						<Footer />
