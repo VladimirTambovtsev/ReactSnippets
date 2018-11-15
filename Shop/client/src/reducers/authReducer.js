@@ -15,6 +15,7 @@ export default function(state = initialState, action) {
 				user: action.payload,
 			}
 		case UPDATE_USER:
+			console.log('action.payload: ', action.payload)
 			return {
 				...state,
 				user: action.payload,

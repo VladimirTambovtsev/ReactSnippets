@@ -56,10 +56,16 @@ export const updateUser = (userId, userData, history) => dispatch => {
 	}
 
 	axios
-		.put(`/api/users/${userId}`, userData, { headers })
-		.then(res => dispatch({ type: UPDATE_USER, payload: res.data }))
+		.patch(`/api/users/${userId}`, userData, { headers })
+		.then(res => {
+			console.log('res.data', res.data)
+			dispatch({ type: UPDATE_USER, payload: res.data })
+		})
 		.then(() => history.push('/user/dashboard'))
-		.catch(err => dispatch({ type: GET_ERRORS, payload: `Error ${err}` }))
+		.catch(err => {
+			console.log('err: ', err)
+			dispatch({ type: GET_ERRORS, payload: `Error ${err}` })
+		})
 }
 
 // Log user out and remove token

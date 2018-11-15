@@ -25,7 +25,14 @@ class UserEdit extends Component {
 			lastname: this.state.lastname,
 			email: this.state.email,
 		}
+		console.log('userData: ', userData)
 		this.props.updateUser(this.props.auth.user.id, userData, this.props.history)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors })
+		}
 	}
 
 	render() {
