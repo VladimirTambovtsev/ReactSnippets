@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Dashboard from './Dashboard'
 import TextFieldGroup from '../common/TextFieldGroup'
+import { updateUser } from '../../actions/authActions'
 
 class UserEdit extends Component {
 	state = {
@@ -19,12 +20,12 @@ class UserEdit extends Component {
 	onSubmit = e => {
 		e.preventDefault()
 
-		const productData = {
+		const userData = {
 			name: this.state.name,
 			lastname: this.state.lastname,
 			email: this.state.email,
 		}
-		// this.props.addProduct(productData, this.props.history)
+		this.props.updateUser(this.props.auth.user.id, userData, this.props.history)
 	}
 
 	render() {
@@ -95,4 +96,7 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps)(UserEdit)
+export default connect(
+	mapStateToProps,
+	{ updateUser }
+)(UserEdit)

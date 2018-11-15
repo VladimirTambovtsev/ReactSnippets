@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ERRORS, SET_CURRENT_USER } from './types'
+import { GET_ERRORS, SET_CURRENT_USER, UPDATE_USER } from './types'
 import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
@@ -45,6 +45,21 @@ export const setCurrentUser = decoded => {
 		type: SET_CURRENT_USER,
 		payload: decoded,
 	}
+}
+
+// Update user information
+export const updateUser = (userId, userData, history) => dispatch => {
+	const token = localStorage.getItem('jwtToken')
+	const headers = {
+		'Content-Type': 'application/json', // eslint-disable-next-line prettier/prettier
+		Authorization: `${token}`
+	}
+
+	axios
+		.put(`/api/users/${userId}`, userData, { headers })
+		.then(res => dispatch({ type: UPDATE_USER, payload: res.data }))
+		.then(() => history.push('/user/dashboard'))
+		.catch(err => dispatch({ type: GET_ERRORS, payload: `Error ${err}` }))
 }
 
 // Log user out and remove token
