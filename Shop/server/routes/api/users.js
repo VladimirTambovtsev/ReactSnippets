@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import mailer from 'nodemailer'
+import hbs from 'nodemailer-express-handlebars'
 // File Upload
 import cloudinary from 'cloudinary'
 import formidable from 'express-formidable'
@@ -73,12 +74,9 @@ router.patch('/:id', passport.authenticate('jwt', { session: false }), async (re
 			lastname: req.body.lastname,
 			email: req.body.email
 		}
-		}
+		},
+		{ new: true }
 	)
-	// return updated object
-	updatedUser.name = req.body.name
-	updatedUser.lastname = req.body.lastname
-	updatedUser.email = req.body.email
 
     res.status(200).json(updatedUser)
   }
@@ -121,19 +119,22 @@ router.post('/register', async (req, res) => {
 	})
 
 	// @TODO: send Email confirmation: see emailConfirmed at User.js
-	const mail = {
+	smtpTransport.use('compile', hbs({
+      viewPath: 'server/config/mails',
+      extName: '.hbs'
+    }))
+
+	const mailMessage = {
 		from: `eCommerce - <${process.env.EMAIL}>`,
-		to: 'tambovcev99@mail.ru',
-		subject: 'Send test email',
-		text: 'Testing our emails',
-		html: '<b>Have you seen my bolt?</b>',
-	}
-	smtpTransport.sendMail(mail, (err, res) => {
-		if (err) {
-			console.log(err)
-		} else {
-			console.log('email send')
+		to: req.body.email,
+		subject: `Welcome to eCommerce, ${req.body.email}`,
+		template: 'confirm_email',
+		context: {
+			email: req.body.email
 		}
+	}
+	smtpTransport.sendMail(mailMessage, (err, res) => {
+		if (err) console.log(err)
 		smtpTransport.close()
 	})
 })

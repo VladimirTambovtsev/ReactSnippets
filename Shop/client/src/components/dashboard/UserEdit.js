@@ -20,6 +20,7 @@ class UserEdit extends Component {
 	onSubmit = e => {
 		e.preventDefault()
 
+		// @TODO: update store.auth after submit; fix `store.auth.user` bug after reloading
 		const userData = {
 			name: this.state.name,
 			lastname: this.state.lastname,
