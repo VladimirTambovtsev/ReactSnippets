@@ -23,6 +23,7 @@ import Product from './components/product/Product'
 import Cart from './components/cart/Cart'
 
 import UserInformation from './components/dashboard/UserInformation'
+import UserEdit from './components/dashboard/UserEdit'
 import AddProduct from './components/dashboard/admin/AddProduct'
 import DeleteProduct from './components/dashboard/admin/DeleteProduct'
 import AllProducts from './components/dashboard/admin/AllProducts'
@@ -84,6 +85,9 @@ class App extends Component {
 									path="/user/dashboard"
 									component={UserInformation}
 								/>
+							</Switch>
+							<Switch>
+								<PrivateRoute exact path="/user/edit" component={UserEdit} />
 							</Switch>
 							<Switch>
 								<PrivateRoute

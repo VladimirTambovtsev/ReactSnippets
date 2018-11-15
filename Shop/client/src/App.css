@@ -121,6 +121,24 @@ button {
 	margin-top: 10px;
 	font-family: 'Oswald', sans-serif;
 	font-size: 16px;
+	border: 1px solid #dcdcdc;
+}
+
+.btn_secodanry {
+	cursor: pointer;
+	text-transform: uppercase;
+	padding: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-family: 'Oswald', sans-serif;
+	font-size: 16px;
+	color: #6b6b6b;
+	background: #d9d9d9;
+	transition: all 200ms ease-in;
+}
+.btn_secodanry:hover {
+	background: #aaaaaa;
+	color: #ffff;
 }
 
 .error_label {

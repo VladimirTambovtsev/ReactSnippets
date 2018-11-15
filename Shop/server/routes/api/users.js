@@ -53,6 +53,24 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 })
 
 
+// @descr: Update user info
+// @access: Private
+router.put('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+	const user = await User.findOne({ _id: req.user.id })
+	if (!user) {
+		return res.status(403).json({ error: 'You must sign in to add products to cart' })
+	}
+
+	// @TODO: validate fields
+
+	const updatedUser = await User.findOneAndUpdate(
+		{ _id: req.params.id },
+		{ $set: { name: req.body.name, lastname: req.body.lastname, email: req.body.email } }
+	)
+	res.status(200).json({ updatedUser })
+})
+
+
 router.post('/register', async (req, res) => {
 	// Validate req.body
 	const { errors, isValid } = validateRegisterInput(req.body)
