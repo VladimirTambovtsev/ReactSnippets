@@ -75,9 +75,12 @@ class Cart extends Component {
 						: null}
 
 					{finalProducts && totalCount !== 0 ? (
-						<div className="user_cart_sum">
-							Total amount: $ {totalCount}
-							<div className="paypal_button_container">Paypal</div>
+						<div className="user_cart_sum">Total amount: $ {totalCount}</div>
+					) : null}
+
+					{finalProducts && totalCount !== 0 ? (
+						<div className="paypal_button_container">
+							<button>Checkout</button>
 						</div>
 					) : null}
 				</div>

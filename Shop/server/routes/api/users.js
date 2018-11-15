@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import mailer from 'nodemailer'
 // File Upload
 import cloudinary from 'cloudinary'
 import formidable from 'express-formidable'
@@ -23,6 +24,15 @@ cloudinary.config({
 	cloud_name: process.env.CLOUD_NAME,
 	api_key: process.env.CLOUD_API_KEY,
 	api_secret: process.env.CLOID_API_SECRET
+})
+
+// nodemailer
+const smtpTransport = mailer.createTransport({
+  service: process.env.EMAIL_SERVICE,
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.PASSWORD
+	}
 })
 
 
@@ -79,6 +89,21 @@ router.post('/register', async (req, res) => {
 	})
 
 	// @TODO: send Email confirmation: see emailConfirmed at User.js
+	const mail = {
+		from: `eCommerce - <${process.env.EMAIL}>`,
+		to: 'tambovcev99@mail.ru',
+		subject: 'Send test email',
+		text: 'Testing our emails',
+		html: '<b>Have you seen my bolt?</b>',
+	}
+	smtpTransport.sendMail(mail, (err, res) => {
+		if (err) {
+			console.log(err)
+		} else {
+			console.log('email send')
+		}
+		smtpTransport.close()
+	})
 })
 
 
