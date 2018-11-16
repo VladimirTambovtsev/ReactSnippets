@@ -190,8 +190,59 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+// @descr: Forget password
+router.post('/forget', async (req, res) => {
+	// @TODO: validate email
+
+	const foundUser = await User.findOne({ email: req.body.email })
+	if (!foundUser) {
+		return res.status(403).json({ error: 'User was not found with this email' })
+	}
+
+	transporter.use('compile', hbs({
+		viewPath: 'server/config/mails',
+		extName: '.hbs'
+	}))
+
+	const protocol = process.env.SSL ? 'https://' : 'http://'
+	const link = `${protocol}${req.headers.host}/reset/${foundUser.id}`
+	const mailOptions = { 
+		from: `eCommerce - <${process.env.EMAIL}>`, 
+		to: req.body.email, 
+		subject: `Confirm Reset Password, ${req.body.email}`, 
+		template: 'reset_password', 
+		context: { 
+			link, 
+			email: req.body.email 
+		} 
+	}
+	console.log('link: ', link)
+	transporter.sendMail(mailOptions, (err, res) => {
+		if (err) console.log(err)
+		transporter.close()
+	})
+	// const saltRounds = 10
+	// const genSalt = await bcrypt.genSalt(saltRounds)
+	// await bcrypt.hash(foundUser.password, genSalt)
+	// 	.then(hash => {
+	// 		// @TODO: set expiration time for next email
+	// 		User.findOneAndUpdate(
+	// 			{ email: req.body.email }, 
+	// 			{
+	// 				$set: {
+	// 					password: hash,
+	// 				}
+	// 			},
+	// 			{ new: true } }
+	// 		)
+	// 		// foundUser.password = hash;
+	// 	})
+	// 	.catch(err => console.log('err: ', err))
+})
+
 
 // @TODO: change route, refactor that shit
+// @descr: upload image to product
 router.post('/uploadimage', formidable(), (req, res) => {
 	// @TODO: check if user signed in
 	

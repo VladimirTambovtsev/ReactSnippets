@@ -1,34 +1,28 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { loginUser } from '../../actions/authActions'
-
 import TextFieldGroup from '../common/TextFieldGroup'
 
-class Login extends Component {
-	constructor() {
-		super()
-		this.state = {
-			email: '',
-			password: '',
-			errors: {},
-		}
-		this.onChange = this.onChange.bind(this)
-		this.onSubmit = this.onSubmit.bind(this)
+class ForgetPassword extends Component {
+	state = {
+		email: '',
+		errors: {},
 	}
-	onChange(e) {
+
+	onChange = e => {
 		this.setState({ [e.target.name]: e.target.value })
 	}
-	onSubmit(e) {
+	onSubmit = e => {
 		e.preventDefault()
 		const userData = {
 			email: this.state.email,
-			password: this.state.password,
 		}
 
-		this.props.loginUser(userData)
+		console.log(userData)
+		// this.props.loginUser(userData)
 	}
+
 	componentDidMount() {
 		// If user log in => go to '/dashboard'
 		if (this.props.auth.isAuthenticated)
@@ -42,7 +36,6 @@ class Login extends Component {
 			this.setState({ errors: nextProps.errors })
 		}
 	}
-
 	render() {
 		const { errors } = this.state
 
@@ -51,8 +44,10 @@ class Login extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8 m-auto">
-							<h1 className="text-center display-4">Log in</h1>
-							<p className="text-center">We're glad to see you again</p>
+							<h1 className="text-center display-4">Forget Password?</h1>
+							<p className="text-center">
+								Enter your Email to reset your password
+							</p>
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">
 									<label htmlFor="exampleInputEmail1">Email address</label>
@@ -67,27 +62,12 @@ class Login extends Component {
 									/>
 								</div>
 
-								<div className="form-group">
-									<label htmlFor="exampleInputPassword1">Password</label>
-									<TextFieldGroup
-										placeholder="Password"
-										name="password"
-										type="password"
-										id="exampleInputPassword1"
-										value={this.state.password}
-										onChange={this.onChange}
-										error={errors.password}
-									/>
-								</div>
 								<button
 									type="submit"
 									className="btn btn-block btn-primary mt-5"
-									style={{ marginTop: 20, marginBottom: 20 }}
 								>
-									Fine, Let me in
+									Send message to Email
 								</button>
-								<br />
-								<Link to="/forget-password">Forget Password?</Link>
 							</form>
 						</div>
 					</div>
@@ -95,12 +75,6 @@ class Login extends Component {
 			</div>
 		)
 	}
-}
-
-Login.propTypes = {
-	loginUser: PropTypes.func.isRequired,
-	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -112,5 +86,5 @@ export default withRouter(
 	connect(
 		mapStateToProps,
 		{ loginUser }
-	)(Login)
+	)(ForgetPassword)
 )
