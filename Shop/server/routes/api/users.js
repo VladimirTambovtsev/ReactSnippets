@@ -199,7 +199,9 @@ router.post('/forget', async (req, res) => {
 		return res.status(403).json({ error: 'User was not found with this email' })
 	}
 
-	// @descr: Update user's jwt date
+	// @TODO: allow request after 24 hours
+	// @TODO: set new `resetToken` for link secure access to user
+	// @descr: Update user's jwt date;
 	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000 } }, { new: true })
 	console.log(updateTokenDate)
 	if (updateTokenDate) {
@@ -208,8 +210,11 @@ router.post('/forget', async (req, res) => {
 			extName: '.hbs'
 		}))
 
-		const protocol = process.env.SSL ? 'https://' : 'http://'
-		const link = `${protocol}${req.headers.host}/reset/${foundUser.id}`
+		// eslint-disable-next-line eqeqeq
+		const protocol = process.env.SSL == true ? 'https://' : 'http://'
+		const url = process.env.CLIENT_URL || 'localhost:3000'
+		const link = `${protocol}${url}/reset/${foundUser.id}`	// set token resetToken at the end
+		console.log(link)
 		const mailOptions = {
 			from: `eCommerce - <${process.env.EMAIL}>`,
 			to: req.body.email,
