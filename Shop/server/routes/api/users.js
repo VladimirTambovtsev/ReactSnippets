@@ -206,7 +206,6 @@ router.post('/forget', async (req, res) => {
 	const pureHash = hash.replace('/', '')
 
 	// @TODO: allow request after 24 hours
-	// @TODO: set new `resetToken` for link secure access to user
 	// @descr: Update user's jwt date;
 	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000, resetToken: pureHash } }, { new: true })
 	if (updateTokenDate) {
@@ -218,7 +217,7 @@ router.post('/forget', async (req, res) => {
 		// eslint-disable-next-line eqeqeq
 		const protocol = process.env.SSL == true ? 'https://' : 'http://'
 		const url = process.env.CLIENT_URL || 'localhost:3000'
-		const link = `${protocol}${url}/password-reset/${pureHash}${foundUser.id}`
+		const link = `${protocol}${url}/password-reset/${pureHash}`
 		const mailOptions = {
 			from: `eCommerce - <${process.env.EMAIL}>`,
 			to: req.body.email,
@@ -235,20 +234,25 @@ router.post('/forget', async (req, res) => {
 			res.status(200).json({ success: true })
 		})
 	}
-		// .then(hash => {
-		// 	// @TODO: set expiration time for next email
-		// 	User.findOneAndUpdate(
-		// 		{ email: req.body.email }, 
-		// 		{
-		// 			$set: {
-		// 				password: hash,
-		// 			}
-		// 		},
-		// 		{ new: true } }
-		// 	)
-		// 	// foundUser.password = hash;
-		// })
-		// .catch(err => console.log('err: ', err))
+})
+
+router.post('/reset/:hash', async (req, res) => {
+	// @TODO: validate passwords
+	
+	// @TODO: check if passwords equals
+
+	// @descr: hash req.body.password
+	const saltRounds = 10
+	const genSalt = await bcrypt.genSalt(saltRounds)
+	const newPassword = await bcrypt.hash(req.body.password, genSalt)
+
+	// @TODO: make avaiable to reset for 24 hrs only
+	// @descr: Find user by hash from url; update password
+	const updatedUser = await User.findOneAndUpdate({ resetToken: req.params.hash }, { $set: { password: newPassword, resetTokenExpires: 0 } }, { new: true })
+	if (updatedUser) {
+		console.log(updatedUser)
+		res.status(200).json({ success: true, updatedUser })
+	}
 })
 
 

@@ -81,7 +81,7 @@ class ResetPassword extends Component {
 									type="submit"
 									className="btn btn-block btn-primary mt-5"
 								>
-									Send message to Email
+									Save new password
 								</button>
 							</form>
 						</div>

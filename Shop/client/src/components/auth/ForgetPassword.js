@@ -19,6 +19,7 @@ class ForgetPassword extends Component {
 			email: this.state.email,
 		}
 
+		// @TODO: receive error if user's email is not found
 		console.log(userData)
 		// this.props.loginUser(userData)
 	}
