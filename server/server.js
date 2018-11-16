@@ -28,6 +28,7 @@ app.disable('x-powered-by')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(express.static('client/build'));
 
 app.use(passport.initialize())
 passportMiddleware(passport)
@@ -38,6 +39,14 @@ app.use('/api/products', products)
 app.use('/api/categories', categories)
 app.use('/api/brands', brands)
 
+
+// default for heroku
+if (process.env.NODE_ENV === 'production') {
+  import path from 'path'
+  app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'))
+  })
+}
 
 const port = process.env.PORT || 8080
 app.listen(port, console.log(`Server is running on ${port}`))
