@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import axios from 'axios'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { loginUser } from '../../actions/authActions'
 import TextFieldGroup from '../common/TextFieldGroup'
 
 class ResetPassword extends Component {
@@ -9,6 +9,7 @@ class ResetPassword extends Component {
 		password: '',
 		password2: '',
 		errors: {},
+		success: false,
 	}
 
 	onChange = e => {
@@ -16,12 +17,31 @@ class ResetPassword extends Component {
 	}
 	onSubmit = e => {
 		e.preventDefault()
-		const userData = {
-			email: this.state.email,
-		}
 
-		console.log(userData)
-		// this.props.loginUser(userData)
+		if (this.state.password !== this.state.password2) {
+			this.setState({ errors: { password2: 'Passwords do not match' } })
+		} else if (
+			this.state.password.length < 8 ||
+			this.state.password2.length < 8
+		) {
+			this.setState({
+				errors: { password2: 'Password must be more than 8 characters' },
+			})
+		} else {
+			const userData = { password: this.state.password }
+
+			axios
+				.post(`/api/users/reset/${this.props.match.params.hash}`, userData)
+				.then(
+					res =>
+						res.data.success
+							? this.setState({
+									success: true,
+							  })
+							: null
+				)
+				.catch(err => console.log('err: ', err))
+		}
 	}
 
 	componentDidMount() {
@@ -46,9 +66,13 @@ class ResetPassword extends Component {
 					<div className="row">
 						<div className="col-md-8 m-auto">
 							<h1 className="text-center display-4">Set new password</h1>
-							<p className="text-center">
-								Enter your Email to reset your password
-							</p>
+							{this.state.success === true ? (
+								<p className="text-success">
+									Password was changed successfully
+								</p>
+							) : (
+								<p className="text-center">Enter your new password</p>
+							)}
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">
 									<label htmlFor="exampleInputPassword1">Password</label>
@@ -77,12 +101,18 @@ class ResetPassword extends Component {
 									/>
 								</div>
 
-								<button
-									type="submit"
-									className="btn btn-block btn-primary mt-5"
-								>
-									Save new password
-								</button>
+								{this.state.success === true ? (
+									<Link to="/signin">
+										<button type="button">Go to Login Page</button>
+									</Link>
+								) : (
+									<button
+										type="submit"
+										className="btn btn-block btn-primary mt-5"
+									>
+										Save new password
+									</button>
+								)}
 							</form>
 						</div>
 					</div>
@@ -97,9 +127,4 @@ const mapStateToProps = state => ({
 	errors: state.errors,
 })
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ loginUser }
-	)(ResetPassword)
-)
+export default withRouter(connect(mapStateToProps)(ResetPassword))

@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { GET_ERRORS, SET_CURRENT_USER, UPDATE_USER } from './types'
+import {
+	GET_ERRORS,
+	SET_CURRENT_USER,
+	UPDATE_USER,
+	UPDATE_PASSWORD,
+} from './types'
 import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode'
 
@@ -47,7 +52,7 @@ export const setCurrentUser = decoded => {
 	}
 }
 
-// Update user information
+// @descr: Update user information
 export const updateUser = (userId, userData, history) => dispatch => {
 	const token = localStorage.getItem('jwtToken')
 	const headers = {
@@ -68,7 +73,7 @@ export const updateUser = (userId, userData, history) => dispatch => {
 		})
 }
 
-// Log user out and remove token
+// @descr: Log user out and remove token
 export const logoutUser = () => dispatch => {
 	localStorage.removeItem('jwtToken')
 	// Remove auth header for future requests

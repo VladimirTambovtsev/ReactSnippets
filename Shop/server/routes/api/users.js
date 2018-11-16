@@ -250,8 +250,7 @@ router.post('/reset/:hash', async (req, res) => {
 	// @descr: Find user by hash from url; update password
 	const updatedUser = await User.findOneAndUpdate({ resetToken: req.params.hash }, { $set: { password: newPassword, resetTokenExpires: 0 } }, { new: true })
 	if (updatedUser) {
-		console.log(updatedUser)
-		res.status(200).json({ success: true, updatedUser })
+		res.status(200).json({ success: true })
 	}
 })
 
