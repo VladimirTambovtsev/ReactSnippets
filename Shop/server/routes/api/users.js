@@ -199,28 +199,33 @@ router.post('/forget', async (req, res) => {
 		return res.status(403).json({ error: 'User was not found with this email' })
 	}
 
-	transporter.use('compile', hbs({
-		viewPath: 'server/config/mails',
-		extName: '.hbs'
-	}))
+	// @descr: Update user's jwt date
+	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000 } }, { new: true })
+	console.log(updateTokenDate)
+	if (updateTokenDate) {
+		transporter.use('compile', hbs({
+			viewPath: 'server/config/mails',
+			extName: '.hbs'
+		}))
 
-	const protocol = process.env.SSL ? 'https://' : 'http://'
-	const link = `${protocol}${req.headers.host}/reset/${foundUser.id}`
-	const mailOptions = { 
-		from: `eCommerce - <${process.env.EMAIL}>`, 
-		to: req.body.email, 
-		subject: `Confirm Reset Password, ${req.body.email}`, 
-		template: 'reset_password', 
-		context: { 
-			link, 
-			email: req.body.email 
-		} 
+		const protocol = process.env.SSL ? 'https://' : 'http://'
+		const link = `${protocol}${req.headers.host}/reset/${foundUser.id}`
+		const mailOptions = {
+			from: `eCommerce - <${process.env.EMAIL}>`,
+			to: req.body.email,
+			subject: `Confirm Reset Password, ${req.body.email}`,
+			template: 'reset_password',
+			context: {
+				link,
+				email: req.body.email
+			}
+		}
+		transporter.sendMail(mailOptions, (err) => {
+			if (err) console.log(err)
+			transporter.close()
+			res.status(200).json({ success: true })
+		})
 	}
-	console.log('link: ', link)
-	transporter.sendMail(mailOptions, (err, res) => {
-		if (err) console.log(err)
-		transporter.close()
-	})
 	// const saltRounds = 10
 	// const genSalt = await bcrypt.genSalt(saltRounds)
 	// await bcrypt.hash(foundUser.password, genSalt)
