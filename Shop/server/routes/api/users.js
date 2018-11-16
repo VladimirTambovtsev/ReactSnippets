@@ -199,11 +199,15 @@ router.post('/forget', async (req, res) => {
 		return res.status(403).json({ error: 'User was not found with this email' })
 	}
 
+	// @descr: generate resetToken
+	const saltRounds = 10
+	const genSalt = await bcrypt.genSalt(saltRounds)
+	const hash = await bcrypt.hash(foundUser.password, genSalt)
+
 	// @TODO: allow request after 24 hours
 	// @TODO: set new `resetToken` for link secure access to user
 	// @descr: Update user's jwt date;
-	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000 } }, { new: true })
-	console.log(updateTokenDate)
+	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000, resetToken: hash } }, { new: true })
 	if (updateTokenDate) {
 		transporter.use('compile', hbs({
 			viewPath: 'server/config/mails',
@@ -213,8 +217,7 @@ router.post('/forget', async (req, res) => {
 		// eslint-disable-next-line eqeqeq
 		const protocol = process.env.SSL == true ? 'https://' : 'http://'
 		const url = process.env.CLIENT_URL || 'localhost:3000'
-		const link = `${protocol}${url}/reset/${foundUser.id}`	// set token resetToken at the end
-		console.log(link)
+		const link = `${protocol}${url}/reset/${hash}${foundUser.id}`	// set token resetToken at the end
 		const mailOptions = {
 			from: `eCommerce - <${process.env.EMAIL}>`,
 			to: req.body.email,
@@ -231,23 +234,20 @@ router.post('/forget', async (req, res) => {
 			res.status(200).json({ success: true })
 		})
 	}
-	// const saltRounds = 10
-	// const genSalt = await bcrypt.genSalt(saltRounds)
-	// await bcrypt.hash(foundUser.password, genSalt)
-	// 	.then(hash => {
-	// 		// @TODO: set expiration time for next email
-	// 		User.findOneAndUpdate(
-	// 			{ email: req.body.email }, 
-	// 			{
-	// 				$set: {
-	// 					password: hash,
-	// 				}
-	// 			},
-	// 			{ new: true } }
-	// 		)
-	// 		// foundUser.password = hash;
-	// 	})
-	// 	.catch(err => console.log('err: ', err))
+		// .then(hash => {
+		// 	// @TODO: set expiration time for next email
+		// 	User.findOneAndUpdate(
+		// 		{ email: req.body.email }, 
+		// 		{
+		// 			$set: {
+		// 				password: hash,
+		// 			}
+		// 		},
+		// 		{ new: true } }
+		// 	)
+		// 	// foundUser.password = hash;
+		// })
+		// .catch(err => console.log('err: ', err))
 })
 
 
