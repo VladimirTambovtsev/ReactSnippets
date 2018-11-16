@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { loginUser } from '../../actions/authActions'
 import TextFieldGroup from '../common/TextFieldGroup'
 
 class ForgetPassword extends Component {
 	state = {
 		email: '',
-		errors: {},
+		errors: '',
+		success: false,
 	}
 
 	onChange = e => {
@@ -20,8 +22,11 @@ class ForgetPassword extends Component {
 		}
 
 		// @TODO: receive error if user's email is not found
-		console.log(userData)
-		// this.props.loginUser(userData)
+
+		axios
+			.post('/api/users/forget', userData)
+			.then(res => this.setState({ success: true }))
+			.catch(err => this.setState({ errors: 'Error sending Email' }))
 	}
 
 	componentDidMount() {
@@ -46,9 +51,15 @@ class ForgetPassword extends Component {
 					<div className="row">
 						<div className="col-md-8 m-auto">
 							<h1 className="text-center display-4">Forget Password?</h1>
-							<p className="text-center">
-								Enter your Email to reset your password
-							</p>
+							{this.state.success === true ? (
+								<p className="text-success">
+									Email was sent successfully. Please, check your Email
+								</p>
+							) : (
+								<p className="text-center">
+									Enter your Email to reset your password
+								</p>
+							)}
 							<form noValidate onSubmit={this.onSubmit}>
 								<div className="form-group">
 									<label htmlFor="exampleInputEmail1">Email address</label>

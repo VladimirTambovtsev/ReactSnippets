@@ -940,3 +940,7 @@ footer .business_nfo .nfo {
 .product_description {
 	font-weight: 100;
 }
+
+.text-success {
+	color: #4f8a10;
+}
