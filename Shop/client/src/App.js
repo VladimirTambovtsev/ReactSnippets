@@ -78,7 +78,11 @@ class App extends Component {
 									path="/password-forget"
 									component={ForgetPassword}
 								/>
-								<Route exact path="/password-reset" component={ResetPassword} />
+								<Route
+									exact
+									path="/password-reset/:hash"
+									component={ResetPassword}
+								/>
 								<Route exact path="/shop" component={Shop} />
 								<Route exact path="/product/:id" component={Product} />
 								<Route exact path="/profiles" component={Profiles} />

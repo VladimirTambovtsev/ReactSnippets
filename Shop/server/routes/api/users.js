@@ -203,11 +203,12 @@ router.post('/forget', async (req, res) => {
 	const saltRounds = 10
 	const genSalt = await bcrypt.genSalt(saltRounds)
 	const hash = await bcrypt.hash(foundUser.password, genSalt)
+	const pureHash = hash.replace('/', '')
 
 	// @TODO: allow request after 24 hours
 	// @TODO: set new `resetToken` for link secure access to user
 	// @descr: Update user's jwt date;
-	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000, resetToken: hash } }, { new: true })
+	const updateTokenDate = await User.findOneAndUpdate({ _id: foundUser.id }, { $set: { resetTokenExpires: Date.now() + 86400000, resetToken: pureHash } }, { new: true })
 	if (updateTokenDate) {
 		transporter.use('compile', hbs({
 			viewPath: 'server/config/mails',
@@ -217,7 +218,7 @@ router.post('/forget', async (req, res) => {
 		// eslint-disable-next-line eqeqeq
 		const protocol = process.env.SSL == true ? 'https://' : 'http://'
 		const url = process.env.CLIENT_URL || 'localhost:3000'
-		const link = `${protocol}${url}/reset/${hash}${foundUser.id}`	// set token resetToken at the end
+		const link = `${protocol}${url}/password-reset/${pureHash}${foundUser.id}`
 		const mailOptions = {
 			from: `eCommerce - <${process.env.EMAIL}>`,
 			to: req.body.email,
