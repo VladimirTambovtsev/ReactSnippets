@@ -87,7 +87,7 @@ class Login extends Component {
 									Fine, Let me in
 								</button>
 								<br />
-								<Link to="/forget-password">Forget Password?</Link>
+								<Link to="/password-forget">Forget Password?</Link>
 							</form>
 						</div>
 					</div>

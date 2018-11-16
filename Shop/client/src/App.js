@@ -17,6 +17,7 @@ import Landing from './components/layout/Landing'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import ForgetPassword from './components/auth/ForgetPassword'
+import ResetPassword from './components/auth/ResetPassword'
 
 import Shop from './components/shop/Shop'
 import Product from './components/product/Product'
@@ -74,9 +75,10 @@ class App extends Component {
 								<Route exact path="/signin" component={Login} />
 								<Route
 									exact
-									path="/forget-password"
+									path="/password-forget"
 									component={ForgetPassword}
 								/>
+								<Route exact path="/password-reset" component={ResetPassword} />
 								<Route exact path="/shop" component={Shop} />
 								<Route exact path="/product/:id" component={Product} />
 								<Route exact path="/profiles" component={Profiles} />
